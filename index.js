@@ -31,6 +31,8 @@ app.use('/auth', authRouter); //register users routes
 
 //AuthorizationRouter.routesConfig(app);
 //UsersRouter.routesConfig(app);
+SupplierRoute.routesConfig(app);  // Babi's supplier route
+
 
 
 app.listen(config.port,()=>{
@@ -38,3 +40,5 @@ app.listen(config.port,()=>{
 });
 
 //app.post("/signup", cleanBody, userController.Signup);
+
+app.use('/api/supplierroute',SupplierRoute)    // Babi's supplier route

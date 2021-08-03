@@ -11,12 +11,6 @@ const userSchema = new Schema({
     warehouse_ID: { type: String, required: true },
     branch_ID: { type: String, required: true },
     role_ID: { type: String, required: true },
-    privilages: [
-      {
-      resource:[resource],
-      permission:[permission]
-      }
-    ],
     firstName: { type: String, required: true },
     lastName: { type: String},
     email: { type: String, required: true, unique: true },
