@@ -3,11 +3,11 @@ const userController = require("./controllers/users.controller")
 const express = require('express');
 router = express.Router();
  
-router.post('/users', function(req, res){
+router.post('/', function(req, res){
     cleanBody,
     userController.insert
   }); 
-  router.get('/users/:userId', function(req, res){
+  router.get('/:userId', function(req, res){
     cleanBody,
     userController.getById
   }); 

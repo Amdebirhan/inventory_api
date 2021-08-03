@@ -13,28 +13,28 @@ router = express.Router();
 //     ]);
 // };
 
-  router.post("auth/signup", cleanBody, authController.Signup);
+  router.post("/signup", cleanBody, authController.Signup);
    
 
-  router.post("auth/login", cleanBody, authController.login);
+  router.post("/login", cleanBody, authController.login);
   
-    router.get("auth/referred",validateToken,authController.login);
+    router.get("/referred",validateToken,authController.login);
 
-    router.patch("auth/activate",[ 
+    router.patch("/activate",[ 
         cleanBody, 
         authController.activate
     ]);    
-    router.patch("auth/forgot",[
+    router.patch("/forgot",[
         cleanBody,
         authController.forgetPassword
     ]);
     
-    router.patch("auth/reset",[
+    router.patch("/reset",[
         cleanBody,
         authController.resetPassword
     ]);
 
-    router.patch("auth/logout",[
+    router.patch("/logout",[
         cleanBody,
         authController.logout
     ]);

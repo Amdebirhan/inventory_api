@@ -26,8 +26,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 //authRouter.routesConfig(app);
-app.use(authRouter); //register auth routes
-app.use(userRouter); //register users routes
+app.use('/auth', authRouter); //register auth routes
+app.use('/user', userRouter); //register users routes
 
 
 
