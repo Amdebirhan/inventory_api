@@ -1,5 +1,8 @@
 const nodemailer = require("nodemailer");
+const handlebars = require("handlebars");
 const env= require('../common/config/env.config');
+const fs = require('fs');
+const path = require("path");
 
 async function sendEmail(email, subject, payload, template) {
   try {
@@ -11,6 +14,8 @@ async function sendEmail(email, subject, payload, template) {
     const senderAddress = env.senderAddress;
 
     var toAddress = email;
+
+    var subject = subject;
 
     const smtpUsername = env.smtpUsername;
 
@@ -26,36 +31,29 @@ async function sendEmail(email, subject, payload, template) {
       port: port,
       //secure: true, // true for 465, false for other ports
       secure:false,
-      requireTLC:true,
+      requireTLS: true,
       auth: {
-        user: smtpUsername,
+        user: senderAddress,
         pass: smtpPassword,
       },
     });
 
     // Specify the fields in the email.
-    const mailOptions = () => {
-        return {
+    const mailOptions = {
             from: senderAddress,
             to: toAddress,
             subject: subject,
             html: compiledTemplate(payload),
-        };
       };
       
 
 
         // Send email
-        transporter.sendMail(mailOptions(), (error, info) => {
-            if (error) {
-              return error;
-            } else {
-              return res.status(200).json({
-                success: true,
-              });
-            }
-          });
-        
+       let info= transporter.sendMail(mailOptions);
+       if(info){
+        return { error: false };
+       }
+          return { error: true };
   } catch (error) {
     console.error("send-email-error", error);
     return {

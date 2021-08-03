@@ -1,34 +1,42 @@
 const cleanBody = require ("../common/middlewares/cleanbody");
-const userController = require("./controllers/authorization.controller")
+const authController = require("./controllers/authorization.controller");
+const { validateToken } = require("../authorization/middlewares/validateToken");
 const express = require('express');
-app = express.Router();
+router = express.Router();
  
-        app.post('/signup', function(req, res){
-            cleanBody,
-         userController.signup
-          }); 
+// exports.routesConfig = function (app) {
+//     app.post('/users', [
+//         userController.insert
+//     ]);
+//     app.get('/users/:userId', [
+//         userController.getById
+//     ]);
+// };
 
-        app.post('/login', function(req, res){
-            cleanBody, 
-         userController.login
-          });  
-    app.patch("/activate",[ 
+  router.post("auth/signup", cleanBody, authController.Signup);
+   
+
+  router.post("auth/login", cleanBody, authController.login);
+  
+    router.get("auth/referred",validateToken,authController.login);
+
+    router.patch("auth/activate",[ 
         cleanBody, 
-        userController.activate
+        authController.activate
     ]);    
-    app.patch("/forgot",[
+    router.patch("auth/forgot",[
         cleanBody,
-        userController.forgetPassword
+        authController.forgetPassword
     ]);
     
-    app.patch("/reset",[
+    router.patch("auth/reset",[
         cleanBody,
-        userController.resetPassword
+        authController.resetPassword
     ]);
 
-    app.patch("/logout",[
+    router.patch("auth/logout",[
         cleanBody,
-        userController.logout
+        authController.logout
     ]);
 
-module.exports = app;
+module.exports = router;

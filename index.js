@@ -5,6 +5,7 @@ const config = require('./common/config/env.config');
 const bodyParser = require('body-parser');
 //const AuthorizationRouter = require('./authorization/routes.config')
 const authRouter = require('./authorization/routes.config');
+const userRouter = require('./users/routes.config');
 const express = require('express');
 const app = express(); 
 
@@ -25,12 +26,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 //authRouter.routesConfig(app);
-app.use('/auth', authRouter); //register users routes
+app.use(authRouter); //register auth routes
+app.use(userRouter); //register users routes
 
 
 
 //AuthorizationRouter.routesConfig(app);
-//UsersRouter.routesConfig(app);
+//userRouter.routesConfig(app);
 
 
 app.listen(config.port,()=>{

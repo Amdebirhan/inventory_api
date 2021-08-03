@@ -3,6 +3,7 @@ const env = require('../../common/config/env.config');
 const { v4: uuid } = require("uuid");
 const { sendEmail } = require("../../helpers/mailler");
 const User = require("../../users/models/users.model");
+const { generateJwt } = require("../../helpers/generateJwt");
 //Validate user schema
 const userSchema = Joi.object().keys({
   email: Joi.string().email({ minDomainSegments: 2 }),
@@ -10,11 +11,9 @@ const userSchema = Joi.object().keys({
   confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
 });
 
-
-
- 
 exports.Signup = async (req, res) => {
   try {
+    
     const result = userSchema.validate(req.body);
     if (result.error) {
       console.log(result.error.message);
@@ -42,15 +41,16 @@ exports.Signup = async (req, res) => {
    result.value.password = hash;
     let code = Math.floor(100000 + Math.random() * 900000);  //Generate random 6 digit code.                             
     let expiry = Date.now() + 60 * 1000 * 15;  //Set expiry 15 mins ahead from now
-    const sendCode = await sendEmail(user.email,
+    const sendCode = await sendEmail(result.value.email,
       "verification code",
-      {name: user.firstName,link: link,},
-      "../../helpers/templates/verificationcode.handlebars");
-    if (sendCode.error) {
-      return res.status(500).json({
-        error: true,
-        message: sendCode.error,
-      });
+      {link: code,},
+      "../helpers/templates/verificationcode.handlebars");
+      if (sendCode.error) {
+        return res.status(500).json({
+          error: true,
+          message: "Couldn't send verification email.",
+        });
+      
     }
     result.value.emailToken = code;
     result.value.emailTokenExpires = new Date(expiry);
@@ -76,10 +76,9 @@ exports.Signup = async (req, res) => {
   }
 };
 
-
-
 exports.login = async (req,res)=>{
   try{
+    
       const{email,password} = req.body;
 
       if(!email){
@@ -98,6 +97,7 @@ exports.login = async (req,res)=>{
               message:"please enter your email and password"
           })
       }else{
+        
           //find a user with the provided email
           const user = await User.findOne({email:email});
 
@@ -117,7 +117,6 @@ exports.login = async (req,res)=>{
           }
           //through error if password is incorrect
           const isValid = await User.comparePasswords(password,user.password);
-
           if(!isValid){
               return res.status(400).json({
                   error:true,
@@ -125,9 +124,8 @@ exports.login = async (req,res)=>{
               })
           }
 
-
           
-          const { error, token } = await generateJwt(user.email, user.userId);
+          const {error, token} = await generateJwt(user.email, user._id);
   if (error) {
     return res.status(500).json({
       error: true,
@@ -147,15 +145,13 @@ exports.login = async (req,res)=>{
           
       }
   }catch(error){
-      console.error("Login error", err);
+      console.error("Login error");
   return res.status(500).json({
     error: true,
     message: "Couldn't login. Please try again later.",
   });
   }
 }
-
-
 
 exports.activate = async(req,res)=>{
   try{
@@ -169,7 +165,7 @@ exports.activate = async(req,res)=>{
 
       const user =await User.findOne({
           email:email,
-          code:code,
+          emailToken:code,
           emailTokenExpires:{$gt:Date.now()},//to check if the code is expires
       })
 
@@ -205,8 +201,6 @@ exports.activate = async(req,res)=>{
       })
   }
 }
-
-
 
 exports.forgetPassword =async (req,res)=>{
   try{
@@ -265,9 +259,6 @@ exports.forgetPassword =async (req,res)=>{
   }
 }
 
-
-
-
 exports.resetPassword = async (req,res)=>{
   try{
       const {token,newPassword,confirmPassword} = req.body
@@ -323,7 +314,6 @@ exports.resetPassword = async (req,res)=>{
   });
   }
 }
-
 
 exports.logout = async (req, res) => {
   try {

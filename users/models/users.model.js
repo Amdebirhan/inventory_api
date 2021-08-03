@@ -6,22 +6,22 @@ const Joi = require('joi');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema({
-    user_ID: { type: String, unique: true, required: true },
-    organizational_ID: { type: String, required: true },
-    warehouse_ID: { type: String, required: true },
-    branch_ID: { type: String, required: true },
-    role_ID: { type: String, required: true },
+    user_ID: { type: String, unique: true, },
+    organizational_ID: { type: String,},
+    warehouse_ID: { type: String,},
+    branch_ID: { type: String,},
+    role_ID: { type: String,},
     privilages: [
       { type: Schema.Types.ObjectId, ref:resource },
       { type: Schema.Types.ObjectId, ref: permission },
     ],
-    firstName: { type: String, required: true },
+    firstName: { type: String},
     lastName: { type: String},
-    email: { type: String, required: true, unique: true },
-    mobile_no: { type: String, required: true, unique: true },
-    address: { type: String, required: true, unique: true },
+    email: { type: String, unique: true },
+    mobile_no: { type: String,unique: true },
+    address: { type: String, unique: true },
     active: { type: Boolean, default: false },
-    password: { type: String, required: true },
+    password: { type: String,},
     resetPasswordToken: { type: String, default: null },
     resetPasswordExpires: { type: Date, default: null },
     emailToken: { type: String, default: null }, 
@@ -45,4 +45,24 @@ module.exports.hashPassword = async (password) => {
     } catch (error) {
         throw new Error("Hashing failed", error);
     }
+};
+
+module.exports.comparePasswords = async (inputPassword, hashedPassword) => {
+  try {
+    return await bcrypt.compare(inputPassword, hashedPassword);
+  } catch (error) {
+    throw new Error("Comparison failed", error);
+  }
+};
+
+
+exports.createUser = (userData) => {
+  const user = new User(userData);
+  return user.save();
+};
+
+exports.getById = (req, res) => {
+  User.findById(req.params.userId).then((result) => {
+      res.status(200).send(result);
+  });
 };
