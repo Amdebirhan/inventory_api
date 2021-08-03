@@ -12,10 +12,8 @@ const userSchema = new Schema({
     branch_ID: { type: String, required: true },
     role_ID: { type: String, required: true },
     privilages: [
-      {
-      resource:[resource],
-      permission:[permission]
-      }
+      { type: Schema.Types.ObjectId, ref:resource },
+      { type: Schema.Types.ObjectId, ref: permission },
     ],
     firstName: { type: String, required: true },
     lastName: { type: String},
