@@ -32,7 +32,6 @@ exports.insert =async (req, res) => {
           message: "role  already exist",
         });
       }
-      console.log(req.body);
       roleModel.createRole(req.body)
         .then((result) => {
             res.status(201).send({id: result._id});
@@ -89,6 +88,7 @@ exports.insert =async (req, res) => {
     }
     roleModel.list(limit, page)
         .then((result) => {
+          delete result.__v;
             res.status(200).send(result);
         })
  };

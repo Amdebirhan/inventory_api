@@ -17,7 +17,6 @@ const Role = mongoose.model("role", roleSchema);
 module.exports = Role;
 
 module.exports.createRole = (roleData) => {
-  console.log(roleData)
   const role = new Role(roleData);
   return role.save();
 };
