@@ -1,10 +1,8 @@
-const mongoose = require('../../common/services/mongoose.service').mongoose;
+const mongoose = require('../../../common/services/mongoose.service').mongoose;
 const Schema = mongoose.Schema;
 
 
 const roleSchema = new Schema({
-  role_ID: { type: String, unique: true, required: true},
-  createdBy: { type: String, required: true},
   roleName: { type: String, required: true },
   },
   {
@@ -18,12 +16,13 @@ const roleSchema = new Schema({
 const Role = mongoose.model("role", roleSchema);
 module.exports = Role;
 
-exports.createRole = (roleData) => {
-  const Role = new Role(roleData);
-  return Role.save();
+module.exports.createRole = (roleData) => {
+  console.log(roleData)
+  const role = new Role(roleData);
+  return role.save();
 };
 
-exports.findById = (id) => {
+module.exports.findById = (id) => {
   return Role.findById(id).then((result) => {
       result = result.toJSON();
       delete result.__v;
@@ -31,13 +30,14 @@ exports.findById = (id) => {
   });
 };
 
-exports.patchUser = (id, roleData) => {
+module.exports.patchUser = (id, roleData) => {
   return Role.findOneAndUpdate({
-    role_ID: id
+    roleId: id
   }, roleData);
 };
 
-exports.list = (perPage, page) => {
+
+module.exports.list = (perPage, page) => {
   return new Promise((resolve, reject) => {
       Role.find()
           .limit(perPage)
@@ -52,9 +52,9 @@ exports.list = (perPage, page) => {
   });
 };
 
-exports.removeById = (roleId) => {
+module.exports.removeById = (roleId) => {
   return new Promise((resolve, reject) => {
-      Role.deleteMany({role_ID: roleId}, (err) => {
+      Role.deleteMany({roleId: roleId}, (err) => {
           if (err) {
               reject(err);
           } else {

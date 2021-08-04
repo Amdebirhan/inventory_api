@@ -1,27 +1,30 @@
 
-const rolesController = require('./controller/role.controller')
+const rolesController = require('./controller/role.controller');
+const cleanBody = require ("../../common/middlewares/cleanbody");;
 const express = require('express');
 router = express.Router();
 
-router.post('/role', [
-    rolesController.insert
-  ]);
-  router.get('/role/:userId', [
-    UsersController.getById
-]);
 
-router.post('/role', [
+router.post('/', [
+    cleanBody,
     rolesController.insert
 ]);
-router.get('/role', [
+router.get('/', [
+    cleanBody,
     rolesController.list
 ]);
-router.get('/role/:userId', [
+router.get('/:userId', [
+    cleanBody,
     rolesController.getById
 ]);
-router.patch('/role/:userId', [
+router.patch('/:userId', [
+    cleanBody,
     rolesController.patchById
 ]);
-router.delete('/role/:userId', [
+router.delete('/:userId', [
+    cleanBody,
     rolesController.removeById
 ]);
+
+  
+module.exports = router;
