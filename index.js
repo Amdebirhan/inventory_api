@@ -1,11 +1,15 @@
-
-const cleanBody = require ("./common/middlewares/cleanbody");
-const authController = require("./authorization/controllers/authorization.controller");
-const config = require('./common/config/env.config');
-const bodyParser = require('body-parser');
-//const AuthorizationRouter = require('./authorization/routes.config')
-const authRouter = require('./authorization/routes.config');
 const express = require('express');
+const config = require('./common/config/env.config');
+const cleanBody = require ("./common/middlewares/cleanbody");
+const bodyParser = require('body-parser');
+
+const authorizationRouter = require('./authorization/routes.config');
+const supplierRouter = require('./suppliers/routes/supplierroute');
+const purchaseorderRouter = require('./purchaseorders/routes/purchaseorderroute');
+const saleorderRouter = require('./saleorders/routes/saleorderroute');
+const billRouter = require('./bills/routes/billroute');
+const invoiceRouter = require('./invoices/routes/invoiceroute');
+
 const app = express(); 
 
 app.use(function (req, res, next) {
@@ -24,21 +28,16 @@ app.use(function (req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-//authRouter.routesConfig(app);
-app.use('/auth', authRouter); //register users routes
 
 
+app.use('/auth', authorizationRouter); //register users routes
+app.use('/supplier', supplierRouter);
+app.use('/purchaseorder', purchaseorderRouter);
+app.use('/saleorder', saleorderRouter);
+app.use('/bill', billRouter);
+app.use('/invoice', invoiceRouter);
 
-//AuthorizationRouter.routesConfig(app);
-//UsersRouter.routesConfig(app);
-SupplierRoute.routesConfig(app);  // Babi's supplier route
-
-
-
-app.listen(config.port,()=>{
+app.listen(config.port,()=> {
     console.log('app listening on port ',config.port);
 });
 
-//app.post("/signup", cleanBody, userController.Signup);
-
-app.use('/api/supplierroute',SupplierRoute)    // Babi's supplier route

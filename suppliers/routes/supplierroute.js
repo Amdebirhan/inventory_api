@@ -1,12 +1,23 @@
 const express = require('express')
-const router  = express.Router()
-
+const cleanBody = require ("../../common/middlewares/cleanbody");
 const SupplierController = require('../controllers/suppliercontroller')
+const ValidationCheck = require('../middleware/suppliervalidation')
+//const { schema } = require('../middleware/suppliervalidationschema') 
+const joi = require("@hapi/joi")
 
-router.get('/', SupplierController.DisplaySuplier)
-router.post('/SearchSupplier', SupplierController.SearchSupplier)
-router.post('/AddSupplie', SupplierController.AddSupplier)
-router.post('/UpdateSupplier', SupplierController.UpdateSupplier)
-router.post('/DeleteSupplier', SupplierController.DeleteSupplier)
+router  = express.Router()
 
-module.exports = router
+  router.get('/', SupplierController.DisplaySupplier)
+
+  router.post('/SearchSupplier', SupplierController.SearchSupplier); 
+
+  //router.post('/AddSupplier', ValidationCheck.datavalidation );
+
+  router.post('/AddSupplier', SupplierController.AddSupplier)
+
+  router.post('/UpdateSupplier', SupplierController.UpdateSupplier);
+
+  router.post('/DeleteSupplier', SupplierController.DeleteSupplier);
+
+
+  module.exports = router
