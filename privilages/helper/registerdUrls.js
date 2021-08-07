@@ -1,19 +1,62 @@
-module.exports = {
-    simple:{
-       path: '/users/',
-       name :["login"],
-    },
-    auth:{
-        //admin
-        '/admin/': ['load-users' , 'set-new-password','delete-user'],
-        '/teacher/':["add-teacher","delete-teacher","edit-teacher"],
-        '/student/':["add-student","delete-student","edit-student","test-result"],
-        
-        //user
-        '/test/':["view-test","submit-test"],
-        '/profile/': ['change-username', 'update-profile-data',  'set-new-password', 'upload-pic', 'update-social-links'],
-        '/teacher/':['load-teacher'],
-        '/student/':['load-student']
 
-    }
+module.exports={
+  simple:[
+    //admin
+    {path:'/admin/',
+    right:{create:true , read:true,update:true}},
+    {path:'/admin/load-users',
+    right:{create:true , read:true,update:true}},
+  ],
+
+ admin:[
+  {path:'/auth/delete-user',
+  right:{create:true , read:true,update:true},
+  },
+    {path:'/admin/load-users',
+    right:{create:false , read:true,update:true},
+    },
+    {path:'/admin/set-new-password',
+    right:{create:true , read:true,update:true},
+    },
+    {path:'/admin/delete-user',
+    right:{create:true , read:true,update:true},
+    },
+    /* and so on... */
+  ],
+  warehouseManager:[
+    {path:'/student/add-student',
+    right:{create:true , read:true,update:true},
+    },
+    {path:'/student/delete-student',
+    right:{create:true , read:true,update:true},
+    },
+    {path:'/student/edit-student',
+    right:{create:true , read:true,update:true},
+    },
+    {path:'/student/test-result',
+    right:{create:true , read:true,update:true},
+    },
+    /* and so on... */
+  ],
+  branchManager:[
+    {
+    path:'/teacher/',
+    right:{create:true , read:true,update:true}
+    },
+    /* and so on... */
+  ],
+  salesPerson:[
+     
+    {path:'/admin/',
+    right:{create:true , read:true,update:true},
+    },
+    {
+    path:'/teacher/',
+    right:{create:true , read:true,update:true}
+    },
+    {path:'/student/',
+    right:{create:true , read:true,update:true},
+    },
+    /* and so on... */
+  ],
 }

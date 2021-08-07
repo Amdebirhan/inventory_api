@@ -8,6 +8,7 @@ const authRouter = require('./authorization/routes.config');
 const userRouter = require('./users/routes.config');
 const roleRouter = require('./privilages/Role/routes.config');
 const resourceRouter = require('./privilages/Resource/routes.config');
+const rightRouter = require('./privilages/Resource/routes.config');
 const express = require('express');
 const app = express(); 
 
@@ -32,6 +33,7 @@ app.use('/auth', authRouter); //register auth routes
 app.use('/user', userRouter); //register users routes
 app.use('/role', roleRouter); //register role routes
 app.use('/resource', resourceRouter); //register resource routes
+app.use('/right', rightRouter); //register resource routes
 
 
 

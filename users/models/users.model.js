@@ -78,6 +78,6 @@ exports.patchUser = (id, userData) => {
   }, userData);
 };
 
-blog.findByIdAndUpdate(entityId, {$set: {'meta.favs': 56}}, function(err, doc) {
-  console.log(doc);
-});
+// blog.findByIdAndUpdate(entityId, {$set: {'meta.favs': 56}}, function(err, doc) {
+//   console.log(doc);
+// });

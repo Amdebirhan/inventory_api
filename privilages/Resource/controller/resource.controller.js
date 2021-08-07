@@ -5,40 +5,21 @@ const { v4: uuid } = require("uuid");
           
 exports.insert =async (req, res) => {
      try{
-      
-    //      const result =roleSchema.validate(req.body);
-    //      //console.log(result);
-    //  if (result.error) {
-    //    console.log(result.error.message);
-    //    return res.json({
-    //      error: true,
-    //      status: 400,
-    //     message: result.error.message,
-    //    });
-
-    //  }
-    //Check if the role has been already registered.
-    fooArray = Object.entries(defaultroutes.auth);
-
-fooArray.forEach(([key, value]) => {
-    req.body.right.url.path=[key];
-    req.body.right.url.name=[value];
-    console.log(req.body.right.url.path);
-    console.log(req.body.right.url.name);
-})
+      const url = [...defaultroutes.simple, ...defaultroutes.admin];
+      req.body.url=url;
+      console.log(req.body.url);
     
 
-    // var resourceSchema = await resourceModel.findOne({
-    //     url: { name:req.body.url}
-    //   });
-    //   if (resourceSchema) {
-    //     return res.json({
-    //       error: true,
-    //       message: "resource already exist",
-    //     });
-    //   }
+    var resourceSchema = await resourceModel.findOne({
+        url:req.body.url
+      });
+      if (resourceSchema) {
+        return res.json({
+          error: true,
+          message: "resource already exist",
+        });
+      }
 
-    console.log(req.body);
       resourceModel.createResource(req.body)
         .then((result) => {
             res.status(201).send({id: result._id});
@@ -56,10 +37,49 @@ fooArray.forEach(([key, value]) => {
         
  };
 
+ exports.list = (req, res) => {
 
- exports.patchById = (req, res) => {
-    roleModel.patchPermission(req.params.userId, req.body).then((result) => {
-            res.status(204).send({});
-    });
-  };
+  let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
   
+  let page = 0;
+  if (req.query) {
+      if (req.query.page) {
+          req.query.page = parseInt(req.query.page);
+          page = Number.isInteger(req.query.page) ? req.query.page : 0;
+      }
+  }
+  resourceModel.list(limit, page)
+      .then((result) => {
+        delete result.__v;
+          res.status(200).send(result);
+      })
+ };
+
+
+exports.geturlById = (req, res) => {
+  resourceModel.findOne( 
+    {'roleId':req.params.roleId}, 
+    function(err, result) {
+        if (err || !result || !result.url || !result.url.length) {
+            res.json({result});
+        } else {
+            res.json(result);
+        }
+    }
+  );
+  //resourceModel.findurlById(req.params.resourceId)
+};
+
+exports.getPrivilageByRoleId = (req, res) => {
+  resourceModel.findOne( 
+    {'roleId':req.params.roleId}, 
+    function(err, result) {
+        if (err || !result || !result.url || !result.url.length) {
+            res.json({result});
+        } else {
+            res.json(result);
+        }
+    }
+  );
+  //resourceModel.findurlById(req.params.resourceId)
+};

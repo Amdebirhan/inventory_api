@@ -62,3 +62,11 @@ module.exports.removeById = (roleId) => {
       });
   });
 };
+
+module.exports.findByName=(roleName)=>{
+  return Role.findOne({name: new RegExp('^'+roleName+'$', "i")}).then((result) => {
+    result = result.toJSON();
+    delete result.__v;
+    return result;
+});
+}
