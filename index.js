@@ -1,6 +1,4 @@
 
-const cleanBody = require ("./common/middlewares/cleanbody");
-const authController = require("./authorization/controllers/authorization.controller");
 const config = require('./common/config/env.config');
 const bodyParser = require('body-parser');
 //const AuthorizationRouter = require('./authorization/routes.config')
@@ -9,6 +7,12 @@ const userRouter = require('./users/routes.config');
 const roleRouter = require('./privilages/Role/routes.config');
 const resourceRouter = require('./privilages/Resource/routes.config');
 const rightRouter = require('./privilages/Resource/routes.config');
+//const authorizationRouter = require('./authorization/routes.config');
+const supplierRouter = require('./suppliers/routes/supplierroute');
+const purchaseorderRouter = require('./purchaseorders/routes/purchaseorderroute');
+const saleorderRouter = require('./saleorders/routes/saleorderroute');
+const billRouter = require('./bills/routes/billroute');
+const invoiceRouter = require('./invoices/routes/invoiceroute');
 const express = require('express');
 const app = express(); 
 
@@ -35,7 +39,11 @@ app.use('/role', roleRouter); //register role routes
 app.use('/resource', resourceRouter); //register resource routes
 app.use('/right', rightRouter); //register resource routes
 
-
+app.use('/supplier', supplierRouter);
+app.use('/purchaseorder', purchaseorderRouter);
+app.use('/saleorder', saleorderRouter);
+app.use('/bill', billRouter);
+app.use('/invoice', invoiceRouter);
 
 //AuthorizationRouter.routesConfig(app);
 //userRouter.routesConfig(app);
@@ -44,5 +52,3 @@ app.use('/right', rightRouter); //register resource routes
 app.listen(config.port,()=>{
     console.log('app listening on port ',config.port);
 });
-
-//app.post("/signup", cleanBody, userController.Signup);
