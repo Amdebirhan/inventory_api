@@ -2,11 +2,7 @@ const sanitize = require("mongo-sanitize");
 module.exports = (req, res, next) => {
   try {
     req.body = sanitize(req.body);
-    return res.status(500).json({
-      error: true,
-      message: "Could not sanitize body",
-    });
-    //next();
+    next();
   } catch (error) {
     console.log("clean-body-error", error);
     return res.status(500).json({

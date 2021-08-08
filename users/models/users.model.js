@@ -5,26 +5,6 @@ const Joi = require('joi');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema({
-<<<<<<< HEAD
-    user_ID: { type: String, unique: true, required: true },
-    organizational_ID: { type: String, required: true },
-    warehouse_ID: { type: String, required: true },
-    branch_ID: { type: String, required: true },
-    role_ID: { type: String, required: true },
-    firstName: { type: String, required: true },
-    lastName: { type: String},
-    email: { type: String, required: true, unique: true },
-    mobile_no: { type: String, required: true, unique: true },
-    address: { type: String, required: true, unique: true },
-    active: { type: Boolean, default: false },
-    password: { type: String, required: true },
-    resetPasswordToken: { type: String, default: null },
-    resetPasswordExpires: { type: Date, default: null },
-    emailToken: { type: String, default: null }, 
-    emailTokenExpires: { type: Date, default: null },
-    accessToken: { type: String, default: null }
-  },
-=======
   organizationalId: { type: String, },
   warehouseId: { type: String, },
   branchId: { type: String, },
@@ -52,7 +32,6 @@ const userSchema = new Schema({
   emailTokenExpires: { type: Date, default: null },
   accessToken: { type: String, default: null }
 },
->>>>>>> 860a139a3950630af880fdffe5020984be954624
   {
     timestamps: {
       createdAt: "createdAt",

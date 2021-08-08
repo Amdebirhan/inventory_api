@@ -9,34 +9,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hapi/joi": "^17.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
-    "express-validator": "^6.12.1",
     "handlebars": "^4.7.7",
     "joi": "^17.4.1",
     "jsonwebtoken": "^8.5.1",
     "mongo-sanitize": "^1.1.0",
     "mongoose": "^5.13.5",
     "nodemailer": "^6.6.2",
-<<<<<<< HEAD
-    "nodemon": "^2.0.12",
-=======
     "url": "^0.11.0",
->>>>>>> 860a139a3950630af880fdffe5020984be954624
     "uuid": "^8.3.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Amdebirhan/inventory_api.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Amdebirhan/inventory_api/issues"
-  },
-  "homepage": "https://github.com/Amdebirhan/inventory_api#readme",
-  "devDependencies": {}
+  }
 }
