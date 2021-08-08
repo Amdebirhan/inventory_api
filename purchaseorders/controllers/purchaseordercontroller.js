@@ -51,9 +51,9 @@ exports.AddPurchaseOrder = async (req, res) => {
         shipment_charge: req.body.shipment_charge,
         total: req.body.total,
         status_ID: req.body.status_ID,
-        recivedamount: req.body.recivedamount,
-        leftamount: req.body.leftamount
-
+        receivedamount: req.body.recivedamount,
+        leftamount: req.body.leftamount,
+        
     });
   
     purchaseorder.save()
@@ -90,8 +90,8 @@ exports.AddPurchaseOrder = async (req, res) => {
         shipment_charge: req.body.shipment_charge,
         total: req.body.total,
         status_ID: req.body.status_ID,
-        recivedamount: req.body.recivedamount,
-        leftamount: req.body.leftamount
+        receivedamount: req.body.recivedamount,
+        leftamount: (req.body.leftamount)
     }
 
     purchaseordermodel.findByIdAndUpdate(purchase_order_ID, {$set: PurchaseorderupdatedData})
