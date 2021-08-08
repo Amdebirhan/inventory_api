@@ -1,34 +1,36 @@
-const cleanBody = require ("../common/middlewares/cleanbody");
-const userController = require("./controllers/authorization.controller")
+const cleanBody = require("../common/middlewares/cleanbody");
+const authController = require("./controllers/authorization.controller");
+const { validateToken } = require("../authorization/middlewares/validateToken");
 const express = require('express');
-app = express.Router();
- 
-        app.post('/signup', function(req, res){
-            cleanBody,
-         userController.signup
-          }); 
+router = express.Router();
 
-        app.post('/login', function(req, res){
-            cleanBody, 
-         userController.login
-          });  
-    app.patch("/activate",[ 
-        cleanBody, 
-        userController.activate
-    ]);    
-    app.patch("/forgot",[
-        cleanBody,
-        userController.forgetPassword
-    ]);
-    
-    app.patch("/reset",[
-        cleanBody,
-        userController.resetPassword
-    ]);
+router.post("/signup", [
+    cleanBody,
+     authController.Signup]);
 
-    app.patch("/logout",[
-        cleanBody,
-        userController.logout
-    ]);
 
-module.exports = app;
+router.post("/login",[
+    cleanBody,
+    authController.login]);
+
+
+router.patch("/activate", [
+    cleanBody,
+    authController.activate
+]);
+router.patch("/forgot", [
+    cleanBody,
+    authController.forgetPassword
+]);
+
+router.patch("/reset", [
+    cleanBody,
+    authController.resetPassword
+]);
+
+router.patch("/logout", [
+    cleanBody,
+    authController.logout
+]);
+
+module.exports = router;

@@ -23,7 +23,11 @@
     "mongo-sanitize": "^1.1.0",
     "mongoose": "^5.13.5",
     "nodemailer": "^6.6.2",
+<<<<<<< HEAD
     "nodemon": "^2.0.12",
+=======
+    "url": "^0.11.0",
+>>>>>>> 860a139a3950630af880fdffe5020984be954624
     "uuid": "^8.3.2"
   },
   "repository": {

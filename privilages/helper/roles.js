@@ -1,0 +1,6 @@
+module.exports = {
+    "ADMIN": 'ADMIN',
+    "WAREHOUSE_MANAGER": 'WAREHOUSE_MANAGER',
+    "BRANCH_MANAGER": 'BRANCH_MANAGER',
+    "SALES_PERSON": 'SALES_PERSON',
+};
