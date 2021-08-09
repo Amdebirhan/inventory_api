@@ -13,7 +13,7 @@ const supplierRouter = require('./suppliers/routes/supplierroute');
 const purchaseorderRouter = require('./purchaseorders/routes/purchaseorderroute');
 const saleorderRouter = require('./saleorders/routes/saleorderroute');
 const billRouter = require('./bills/routes/billroute');
-const invoiceRouter = require('./invoices/routes/invoiceroute');
+const invoiceRouter = require('./invoices/routes/invoiceroute'); 
 
 
 app.use(function (req, res, next) {
@@ -33,17 +33,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-/*app.use('/auth', authRouter); //register auth routes
+app.use('/auth', authRouter); //register auth routes
 app.use('/user', userRouter); //register users routes
 app.use('/role', roleRouter); //register role routes
 app.use('/resource', resourceRouter); //register resource routes
-app.use('/right', rightRouter); //register resource routes  */
+app.use('/right', rightRouter); //register resource routes  
 
-//app.use('/supplier', supplierRouter);
-/*app.use('/purchaseorder', purchaseorderRouter);
+app.use('/supplier', supplierRouter);
+app.use('/purchaseorder', purchaseorderRouter);
 app.use('/saleorder', saleorderRouter);
 app.use('/bill', billRouter);
-app.use('/invoice', invoiceRouter);*/
+app.use('/invoice', invoiceRouter); 
 
 
 app.listen(config.port,()=> {
