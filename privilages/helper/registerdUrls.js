@@ -3,9 +3,9 @@ module.exports={
   simple:[
     //admin
     {path:'/admin/',
-    right:{create:true , read:true,update:true}},
+    right:{create:true , read:false,update:true,deny:true}},
     {path:'/admin/load-users',
-    right:{create:true , read:true,update:true}},
+    right:{create:true , read:true,update:true,deny:true}},
   ],
 
  admin:[
