@@ -20,9 +20,20 @@
     "joi": "^17.4.1",
     "jsonwebtoken": "^8.5.1",
     "mongo-sanitize": "^1.1.0",
+    "mongodb": "^4.1.0",
     "mongoose": "^5.13.5",
     "nodemailer": "^6.6.2",
+    "nodemon": "^2.0.12",
     "url": "^0.11.0",
     "uuid": "^8.3.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amdebirhan/inventory_api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Amdebirhan/inventory_api/issues"
+  },
+  "homepage": "https://github.com/Amdebirhan/inventory_api#readme"
 }
