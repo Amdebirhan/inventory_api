@@ -7,7 +7,7 @@ const invoiceSchema = new Schema({
     customer_ID: { type: String },
     sales_person_ID: { type: String },
     sale_order_ID: { type: String},
-    invoice_date:{type: date},
+    invoice_date:{ type: Date},
     status_ID: { type: String},  
   },
 
@@ -19,6 +19,6 @@ const invoiceSchema = new Schema({
   }
 
 );
-const Invoice = mongoose.model("purchase", invoiceSchema);
+const Invoice = mongoose.model("invoice", invoiceSchema);
 module.exports = Invoice;
 

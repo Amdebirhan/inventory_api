@@ -17,7 +17,7 @@ exports.DisplaySupplier = async (req, res) => {
 };
 
 // search by ID (Show single supplier)
-    exports.SearchSupplier = async (req, res) => {
+exports.SearchSupplier = async (req, res) => {
     let supplier_ID = req.body.supplier_ID
     suppliermodel.findById(supplier_ID)
     .then(response => {
@@ -31,37 +31,35 @@ exports.DisplaySupplier = async (req, res) => {
         })
     })
 }
-
+  
 // Add supplier
 exports.AddSupplier = async (req, res) => {
-//const AddSupplier = (req, res, next ) => {
-    const supplier = new suppliermodel({
-        upplier_ID: req.body.supplier_ID,
-        organizational_ID: req.body.organizational_ID,
-        company_Name: req.body.company_Name,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        workPhone_no: req.workPhone_no,
-        mobile_no: req.body.mobile_no,
-        country:req.body.country,
-        state: req.body.state,
-        city: req.body.city,
-        street: req.body.street
-    });
-  
-    supplier.save()
-    .then(data => {
-        res.json(data)
-        })
-  
-    .catch(error => {
-        res.json({
-            message: 'An error occurs!'
+      const supplier = new suppliermodel({
+            supplier_ID : req.body.supplier_ID,
+            organizational_ID: req.body.organizational_ID,
+            company_Name: req.body.company_Name,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            workPhone_no: req.workPhone_no,
+            mobile_no: req.body.mobile_no,
+            country:req.body.country,
+            state: req.body.state,
+            city: req.body.city,
+            street: req.body.street
         });
-    }); 
-}
-
+      
+        supplier.save()
+        .then(data => {
+            res.json(data)
+            })
+      
+        .catch(error => {
+            res.json({
+                message: 'An error occurs!'
+            });
+        }); 
+    }
 
 // Update supplier using ID
     exports.UpdateSupplier = async (req, res) => {
@@ -111,10 +109,7 @@ exports.AddSupplier = async (req, res) => {
     })
 }
 
-/* export functions
-module.exports = {
-    DisplaySupplier,AddSupplier,SearchSupplier,UpdateSupplier,DeleteSupplier
-}*/
+
 
 
 

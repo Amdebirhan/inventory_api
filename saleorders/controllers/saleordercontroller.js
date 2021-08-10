@@ -17,7 +17,7 @@ exports.DisplaySaleOrder = async (req, res) => {
 };
 
 // search by ID (Show single supplier)
-    exports.SearchSaleeOrder = async (req, res) => {
+    exports.SearchSaleOrder = async (req, res) => {
     let sale_order_ID = req.body.sale_order_ID
     saleordermodel.findById(sale_order_ID)
     .then(response => {
@@ -71,7 +71,7 @@ exports.AddSaleOrder = async (req, res) => {
 
 
 // Update supplier using ID
-    exports.SaleOrder = async (req, res) => {
+    exports.UpdateSaleOrder = async (req, res) => {
     let sale_order_ID = req.body.sale_order_ID
 
     let SaleorderupdatedData = {
@@ -110,7 +110,7 @@ exports.AddSaleOrder = async (req, res) => {
 }
 
 // Delete Data
-    exports.SaleOrder = async (req, res) => {
+    exports.DeleteSaleOrder = async (req, res) => {
     let sale_order_ID = req.body.sale_order_ID
     saleordermodel.findByIdAndRemove(sale_order_ID)
     .then(response => {
