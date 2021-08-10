@@ -8,7 +8,7 @@ const userSchema = new Schema({
   organizationalId: { type: String, },
   warehouseId: { type: String, },
   branchId: { type: String, },
-  roleId: { type: String,},
+  roleId: { type: String, },
   privilages: [{
     path: { type: String },
     right: {
@@ -65,16 +65,70 @@ module.exports.createUser = (userData) => {
   return user.save();
 };
 
-exports.getById = (req, res) => {
-  User.findById(req.params.userId).then((result) => {
-    res.status(200).send(result);
-  });
+exports.findById = (id) => {
+  return User.findById(id)
+    .then((result) => {
+      result = result.toJSON();
+      delete result._id;
+      delete result.__v;
+      return result;
+    });
 };
 
+module.exports.findByName = (pathName) => {
+  console.log(pathName)
+  return User.findOne({ "privilages.path": pathName }).then((result) => {
+    return result;
+  });
+}
+module.exports.function = {
+  removePermission: function (arr, right, value) {
+    var i = arr.length;
+    while (i--) {
+      if (arr[i].right.deny === value) {
+        arr.splice(i, 1);
 
-exports.patchUser = (id, userData) => {
+      }
+    }
+    console.log(arr);
+    //return arr;
+  }
+}
+
+
+module.exports.updatePrivilage = (id, privilages) => {
+
+  db.test.update(
+    { _id: "777" },
+    { $pull: { "someArray.$[elem]": { deny: true } } },
+    { arrayFilters: [{ "elem.name": "name1" }] }
+  )
+
+
+
+  //   User.updateMany({
+  //     _id: id
+  //   }, {
+  //     $pull: {
+  //       "privilages.$[privilage]": {"right.deny":true},
+  //     },
+  //   }, {arrayFilters:[{ "privilage.right.deny": true}], multi: true, upsert: true }, function (err, updatec) {
+  //     if (err) {
+  //       console.log(err); 
+  //     }
+  //     else {
+  //       console.log("permission updated");
+  //     }
+  //   })
+
+
+}
+
+
+
+module.exports.patchUser = (id, userData) => {
   return User.findOneAndUpdate({
-      _id: id,path
+    _id: id, path
   }, userData);
 };
 

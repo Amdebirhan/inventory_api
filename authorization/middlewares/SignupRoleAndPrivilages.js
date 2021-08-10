@@ -8,7 +8,6 @@ const resourceModel = require('../../privilages/Resource/controller/resource.con
 exports.assignRole=(role)=>{
     //assign an admin role for first time users when they sign up
     roleSchema=roleModel.findByName(role);
-
     //if there is no role in our role model insert this role to the database with the default privilages
     if (!roleSchema) {
         roleModel.create(role);
@@ -24,8 +23,6 @@ exports.assignRole=(role)=>{
       privilageSchema = await privilageModel.findByRoleId(roleId);
       for (let i = 0; i < privilageSchema.url.length; i++) {
         delete privilageSchema.url[i]._id;
-        //delete privilageSchema.url[i].right;
       } 
-      //console.log(privilageSchema.url);
       return privilageSchema.url;
   }

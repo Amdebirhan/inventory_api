@@ -6,19 +6,23 @@ const express = require('express');
 const url = require("url");
 router = express.Router();
 
-router.route('/').post([
+router.route('/').post(function(req, res){
+  [
   cleanBody,
   validateToken,
   privilages.getPrivilages,
   userController.insert
-]).get([
+]
+})
+
+router.get(('/'),[
     cleanBody,
     validateToken,
     privilages.getPrivilages,
     userController.getById
   ]);
 router.get('/get',
-  privilages.getPrivilages,
+userController.assignPrivilage,
 );
 
 
