@@ -51,10 +51,14 @@ module.exports.list = (perPage, page) => {
 
 module.exports.findByRoleId=(roleId)=>{
   return Resources.findOne({roleId:roleId}).then((result) => {
-    result = result.toJSON();
+    if(result === null){
+      return result;
+    }else{
+      result = result.toJSON();
     delete result.url._id;
     delete result.__v;
     return result;
+    }
 });
 }
 

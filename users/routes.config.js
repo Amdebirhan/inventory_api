@@ -6,24 +6,37 @@ const express = require('express');
 const url = require("url");
 router = express.Router();
 
-router.route('/').post(function(req, res){
+router.route('/').post(function (req, res) {
   [
-  cleanBody,
-  validateToken,
-  privilages.getPrivilages,
-  userController.insert
-]
-})
-
-router.get(('/'),[
     cleanBody,
     validateToken,
     privilages.getPrivilages,
-    userController.getById
-  ]);
-router.get('/get',
-userController.assignPrivilage,
+    userController.insert
+  ]
+})
+
+router.get(('/:userId'), [
+  cleanBody,
+  validateToken,
+  privilages.getPrivilages,
+  userController.getById
+]);
+
+router.get(('/list-users'), [
+  cleanBody,
+  validateToken,
+  privilages.getPrivilages,
+  userController.list
+]);
+
+router.patch('/assignPrivilages',
+  userController.assignPrivilage,
 );
+
+router.delete('/users/:userId', [
+  userController.removeById
+]);
+
 
 
 module.exports = router;

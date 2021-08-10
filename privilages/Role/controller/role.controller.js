@@ -4,24 +4,24 @@ const { v4: uuid } = require("uuid");
 
   const roleSchema = Joi.object().keys({
     roleName: Joi.string().min(3).max(30).required(),
-    });
+    }).unknown();
 
     
           
 exports.insert =async (req, res) => {
      try{
       
-    //      const result =roleSchema.validate(req.body);
-    //      //console.log(result);
-    //  if (result.error) {
-    //    console.log(result.error.message);
-    //    return res.json({
-    //      error: true,
-    //      status: 400,
-    //     message: result.error.message,
-    //    });
+         const result =roleSchema.validate(req.body);
+         //console.log(result);
+     if (result.error) {
+       console.log(result.error.message);
+       return res.json({
+         error: true,
+         status: 400,
+        message: result.error.message,
+       });
 
-    //  }
+     }
     //Check if the role has been already registered.
     var roleSchema = await roleModel.findOne({
         roleName: req.body.roleName,

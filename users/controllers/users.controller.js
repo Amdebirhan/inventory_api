@@ -55,15 +55,34 @@ exports.getById = (req, res) => {
 
 
 exports.assignPrivilage = async (req, res) => {
-  console.log(req.body.userId);
-  req.body.privilage = privilages.admulUrls;
-  console.log(req.body.privilage[0].right.deny);
+  //console.log(req.body.userId);
+  //req.body.privilage = privilages.admulUrls;
+  //console.log(req.body.privilage[0].right.deny);
   
   const result =User.function.removePermission(req.body.privilage,req.body.privilage[0].right.deny,true);
 
 
 }
+exports.list = (req, res) => {
+  let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
+  let page = 0;
+  if (req.query) {
+      if (req.query.page) {
+          req.query.page = parseInt(req.query.page);
+          page = Number.isInteger(req.query.page) ? req.query.page : 0;
+      }
+  }
+  User.list(limit, page).then((result) => {
+      res.status(200).send(result);
+  })
+};
 
+exports.removeById = (req, res) => {
+  User.removeById(req.params.userId)
+      .then((result)=>{
+          res.status(204).send({});
+      });
+};
 
   //const result = User.updatePrivilage(req.body.userId,req.body.privilage);
   

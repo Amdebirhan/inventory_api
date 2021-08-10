@@ -5,13 +5,9 @@ const { v4: uuid } = require("uuid");
           
 exports.insert =async (req, res) => {
      try{
-      const url = [...defaultroutes.simple, ...defaultroutes.admin];
-      req.body.url=url;
-      console.log(req.body.url);
-    
-
+      console.log(req.body);
     var resourceSchema = await resourceModel.findOne({
-        url:req.body.url
+        roleId:req.body.roleId
       });
       if (resourceSchema) {
         return res.json({

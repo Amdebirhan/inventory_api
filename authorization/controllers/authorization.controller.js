@@ -10,14 +10,15 @@ const userSchema = Joi.object().keys({
   email: Joi.string().email({ minDomainSegments: 2 }),
   password: Joi.string().required().min(4),
   confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
-});
+}).unknown();
 
 exports.Signup = async (req, res) => {
   try {
+     req.body.roleName = roles.ADMIN;
+    req.body.roleId =await rolesAndPrivilages.assignRole(req.body,res);
+    delete req.body.roleName;
+    req.body.privilages =await rolesAndPrivilages.assignPrivilages(req.body.roleId);
     const result = userSchema.validate(req.body);
-    req.body.roleId = rolesAndPrivilages.assignRole(roles.ADMIN);
-    req.body.privilages = rolesAndPrivilages.assignPrivilages(req.body.roleId);
-
     if (result.error) {
       console.log(result.error.message);
       return res.json({
@@ -31,10 +32,31 @@ exports.Signup = async (req, res) => {
       email: result.value.email,
     });
     if (user) {
-      return res.json({
-        error: true,
-        message: "Email is already in use",
-      });
+      if(!user.active){
+        var emailToken = await User.findOne({
+          email: result.value.email,
+          emailTokenExpires: { $gt: Date.now()}
+        });
+        if(emailToken!==null){
+          return res.json({
+            error: true,
+            message: "We send a verification code through your Email please check your email",
+          });
+        }else{
+          User.findOneAndRemove({_id: user._id}, (err) => {
+            if (err) {
+              req.flash("error", err);
+              //return res.redirect("/user/edit");
+            }
+            //return res.redirect("/shop/coffee");
+          });
+        }
+      }else{
+        return res.json({
+          error: true,
+          message: "Email is already in use",
+        });
+      }
     }
     const hash = await User.hashPassword(result.value.password);
     const id = uuid(); //Generate unique id for the user.
@@ -60,6 +82,7 @@ exports.Signup = async (req, res) => {
 
     const newUser = new User(result.value);
     await newUser.save();
+    
     return res.status(200).json({
       success: true,
       message: "Registration Success",
@@ -122,6 +145,7 @@ exports.login = async (req, res) => {
 
 
       const { error, token } = await generateJwt(user.email, user._id);
+      console.log(error)
       if (error) {
         return res.status(500).json({
           error: true,
@@ -129,13 +153,12 @@ exports.login = async (req, res) => {
         });
       }
       user.accessToken = token;
-      console.log(token);
       await user.save();
 
       //successfully login
       return res.send({
         success: true,
-        message: "user logged in successfully",
+        message: user.accessToken,
       })
 
 
