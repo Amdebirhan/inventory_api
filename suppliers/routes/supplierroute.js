@@ -7,7 +7,7 @@ const joi = require("@hapi/joi")
 
 router  = express.Router()
 
-  router.get('/', SupplierController.DisplaySupplier)
+  router.get('/', SupplierController.DisplaySupplier);
 
   router.post('/SearchSupplier', SupplierController.SearchSupplier); 
 

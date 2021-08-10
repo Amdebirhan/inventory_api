@@ -99,10 +99,7 @@ exports.AddInvoice = async (req, res) => {
     })
 }
 
-/* export functions
-module.exports = {
-    DisplaySupplier,AddSupplier,SearchSupplier,UpdateSupplier,DeleteSupplier
-}*/
+
 
 
 

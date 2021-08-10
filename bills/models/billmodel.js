@@ -7,7 +7,7 @@ const billSchema = new Schema({
     purchase_order_ID: { type: String },
     supplier_ID: { type: String},
     warehouse_ID: { type: String },
-    bill_date:{type: date},
+    bill_date:{ type: Date},
     status_ID: { type: String},  
   },
 
@@ -19,6 +19,6 @@ const billSchema = new Schema({
   }
 
 );
-const Bill = mongoose.model("purchase", billSchema);
+const Bill = mongoose.model("bill", billSchema);
 module.exports = Bill;
 
