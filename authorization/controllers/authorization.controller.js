@@ -144,7 +144,7 @@ exports.login = async (req, res) => {
       }
 
 
-      const { error, token } = await generateJwt(user.email, user._id);
+      const { error, token } = await generateJwt(user.email, user._id,user.organizationalId);
       console.log(error)
       if (error) {
         return res.status(500).json({

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Invoice</title>
+
+    <!-- Bootstrap cdn 3.3.7 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Custom font montseraat -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
+
+    <!-- Custom style invoice1.css -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        hr {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .invoice {
+            position: relative;
+            background-color: #f5f5f5;
+        }
+
+        .invoice-wrapper {
+            margin-top: 100px;
+            margin-bottom: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 900px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+
+        .invoice-top {
+            background-color: #f5f5f5;
+            min-height: 150px;
+            max-height: 150px;
+            overflow: hidden;
+            padding: 40px 60px;
+        }
+
+        .invoice-top-left .logo {
+            width: 190px;
+        }
+
+        .invoice-top-left h1 {
+            font-size: 24px;
+            letter-spacing: 1.5px;
+        }
+
+        .invoice-top-left h5 {
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.30);
+        }
+
+        .invoice-top-right {
+            text-align: right;
+        }
+
+        .invoice-top-right h4 {
+            font-size: 20px;
+        }
+
+        .invoice-top-right h6 {
+            color: rgba(0, 0, 0, 0.30);
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .invoice-top-right h3 {
+            color: rgba(0, 0, 0, 0.30);
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .invoice-top-right .amount {
+            color: rgba(0, 200, 83, 0.95);
+            font-size: 16px;
+            margin-top: 40px;
+        }
+
+        .invoice-bottom {
+            background-color: #ffffff;
+            padding: 5px 60px 30px;
+        }
+
+        .invoice-bottom .service-title {
+            font-size: 14px;
+        }
+
+        .invoice-bottom .service-subtitle {
+            font-size: 12px;
+            color: rgba(5, 4, 4, 0.7);
+            font-weight: 400;
+        }
+
+        .invoice-bottom .service-price {
+            font-size: 16px;
+            color: rgba(0, 200, 83, 0.55);
+            text-align: left;
+        }
+
+        .invoice-bottom .price-info {
+            font-size: 10px;
+            color: rgba(0, 0, 0, 0.30);
+            text-align: left;
+        }
+
+        .sub-total,
+        .sub-total-price {
+            margin-top: 30px !important;
+        }
+
+        .sub-total,
+        .discount {
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.4);
+            text-align: right;
+            font-size: 13px;
+        }
+
+        .sub-total-price,
+        .discount-price {
+            font-size: 16px;
+            color: #333;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .total-due {
+            text-align: right;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .total-due-price {
+            color: rgba(0, 200, 83, 0.95);
+            font-size: 18px;
+            text-align: right;
+        }
+
+        .header {
+            background-color: #fafafa;
+            padding: 50px 50px;
+        }
+
+        .client-address h6 {
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 15px;
+        }
+
+        .client-address h2 {
+            color: #222;
+            font-size: 16px;
+        }
+
+        .client-address h4 {
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.4);
+            line-height: 1.65;
+            font-weight: 400;
+        }
+
+        .our-address h6 {
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 15px;
+        }
+
+        .our-address h2 {
+            color: #222;
+            font-size: 16px;
+        }
+
+        .our-address h4 {
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.4);
+            line-height: 1.65;
+            font-weight: 400;
+        }
+
+        .note h6 {
+            color: rgba(0, 0, 0, 0.3);
+            font-size: 15px;
+        }
+
+        .note p {
+            color: rgba(0, 0, 0, 0.4);
+            margin-top: 20px;
+        }
+
+        .payment {
+            background-color: #2196F3;
+            padding: 20px;
+        }
+
+        .payment h3 {
+            margin: 0;
+            font-size: 20px;
+            letter-spacing: 1.5px;
+        }
+
+        .payment h3 a {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="invoice">
+        <div class="bg-color"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="invoice-wrapper">
+                        <div class="invoice-top">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="invoice-top-left">
+                                        <img src="{{ company_logo }}" class="img-responsive logo" />
+                                        <h1>{{ company_name }}</h1>
+                                        <h5>Web design for Airbnb homepage</h5>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="invoice-top-right">
+                                        <h4>{{ title }}</h4>
+                                        <h6>#invoice-number</h6>
+                                        <h3>{{ date }}</h3>
+                                        <h2 class="amount">₹50,000</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="header">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="client-address">
+                                        <h6>TO</h6>
+                                        <h2>{{ customer_company_name }}</h2>
+                                        <h4>
+                                            {{ customer_adress }} <br>
+                                            {{ customer_company_phone_number }}<br>
+                                            {{ customer_email }}
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-6"></div>
+                                <div class="col-md-3">
+                                    <div class="our-address">
+                                        <h6>FROM</h6>
+                                        <h2>{{ company_name }}.</h2>
+                                        <h4>
+                                            {{ company_adress }} <br>
+                                            {{ company_phone_number }}<br>
+                                            {{ company_email }} 
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="invoice-bottom">
+                            <div class="row">
+
+                                <div class="col-sm-1">
+                                    <h2 class="service-title">#</h2>
+                                </div>
+                                <div class="col-sm-5">
+                                    <h2 class="service-title">Item And Description</h2>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h2 class="service-title">Qty</h2>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h2 class="service-title">Price</h2>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h3 class="service-price">Total</h3>
+                                </div>
+                            </div>
+                            <hr>
+                            {{#each products.prodlist}}
+                            <div class="row">
+                                <div class="col-sm-1">
+                                    <h2 class="service-title">1</h2>
+                                </div>
+                                <div class="col-sm-5">
+                                    <h3 class="service-title">{{this.name}}</h3>
+                                    <h5 class="service-subtitle">{{this.description}}</h5>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h3 class="service-price">{{this.quantity}}</h3>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h3 class="service-price">{{this.price}}</h3>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h3 class="service-price">{{this.total}}</h3>
+                                </div>
+                            </div>
+                            {{/each}}
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-10 col-xs-8">
+                                    <h4 class="sub-total">SUB TOTAL</h4>
+                                </div>
+                                <div class="col-sm-2 col-xs-4">
+                                    <h3 class="sub-total-price">{{products.subtotal}}</h3>
+                                </div>
+                                <div class="col-sm-10 col-xs-8">
+                                    <h4 class="sub-total">TAX</h4>
+                                </div>
+                                <div class="col-sm-2 col-xs-4">
+                                    <h3 class="sub-total-price">{{products.tax}}</h3>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-10 col-xs-8">
+                                    <h4 class="discount">SHIPMENT CHARGE</h4>
+                                </div>
+                                <div class="col-sm-2 col-xs-4">
+                                    <h3 class="discount-price">{{products.shipment_charge}}</h3>
+                                </div>
+                                <div class="col-sm-10 col-xs-8">
+                                    <h4 class="discount">DISCOUNT</h4>
+                                </div>
+                                <div class="col-sm-2 col-xs-4">
+                                    <h3 class="discount-price">{{products.tax}}</h3>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-sm-9 col-xs-8">
+                                    <h3 class="total-due">TOTAL DUE</h3>
+                                </div>
+                                <div class="col-sm-3 col-xs-4">
+                                    <h3 class="total-due-price">{{products.grandtotal}}</h3>
+                                </div><br>
+                            </div><span class="d-block">Expected delivery date</span><br>
+                            <span class="font-weight-bold text-success">12 March 2020</span><br>
+                            <span class="d-block mt-3 text-black-50 fs-15">We will be sending a shipping confirmation
+                                email when the item is shipped!</span>
+
+                        </div>
+                        <div class="payment">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h3 class="text-center">
+                                        <p>A finance charge of 1.5% will be made on unpaid balances after 30 days.</p>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- jquery slim version 3.2.1 minified -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+<th scope="col">Description</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Price</th>
+              <th scope="col">Total</th>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+       
+      <table class="table" width="95%">
+          <tbody>
+            {{#each products.prodlist}}
+            <tr>
+              <td width="10%">
+                <img height="70" width="70" src="{{this.imgurl}}" alt="">
+              </td>
+              <th scope="row" width="50%">
+                <h5 style="font-weight: 700;color:chocolate">{{this.name}}</h5>
+                <p>{{this.description}}</p>
+              </th>
+              <td width="10%">{{this.unit}}</td>
+              <td width="10%">{{this.quantity}}</td>
+              <td width="10%">${{this.price}}</td>
+              <td width="10%">${{this.total}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        <table width="95%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="90%"  align="right" style="font-size: 25px;font-weight: 700;color:darkred; background-color: #f6f6f6;">Sub Total</td>
+            <td width="10%" align="right" style="background-color: lightgreen;"><h2 style="font-size: 25px;font-weight: 700;color:#fff;">${{products.subtotal}}</h2></td>
+          </tr>
+          <tr>
+            <td width="90%"  align="right" style="font-size: 25px;font-weight: 700;color:darkred; background-color: #f6f6f6;">Tax</td>
+            <td width="10%" align="right" style="background-color: lightcoral;"><h2 style="font-size: 25px;font-weight: 700;color:#fff;">${{products.tax}}</h2></td>
+          </tr>
+          <tr>
+            <td width="90%"  align="right" style="font-size: 25px;font-weight: 700;color:darkred; background-color: #f6f6f6;">Grand Total</td>
+            <td width="10%" align="right" style="background-color: lightgreen;"><h2 style="font-size: 25px;font-weight: 700;color:#fff;">${{products.gtotal}}</h2></td>
+          </tr>
+        </table>
+        <table width="95%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="100%"  align="left" style="font-size: 25px;font-weight: 700;color:red; background-color: #f6f6f6;">Notice:</td>
+          </tr>
+          <tr>
+            <td width="100%"  align="left" style="font-size: 25px;font-weight: 700;color:#000; background-color: #f6f6f6;">A finance charge of 1.5% will be made on unpaid balances after 30 days.</td>
+          </tr>
+        </table>
+</body>
+</html>

@@ -17,7 +17,7 @@ exports.DisplayInvoice = async (req, res) => {
 };
 
 // search by ID (Show single supplier)
-    exports.SearchInvoice = async (req, res) => {
+exports.SearchInvoice = async (req, res) => {
     let invoice_ID = req.body.invoice_ID
     invoicemodel.findById(invoice_ID)
     .then(response => {
@@ -98,6 +98,7 @@ exports.AddInvoice = async (req, res) => {
         })
     })
 }
+
 
 
 

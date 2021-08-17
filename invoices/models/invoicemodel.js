@@ -22,3 +22,16 @@ const invoiceSchema = new Schema({
 const Invoice = mongoose.model("invoice", invoiceSchema);
 module.exports = Invoice;
 
+
+module.exports.findById=(invoiceId)=>{
+  return Saleorder.findOne({_id:invoiceId}).then((result) => {
+    if(result === null){
+      return result;
+    }else{
+      result = result.toJSON();
+    delete result.url._id;
+    delete result.__v;
+    return result;
+    }
+});
+}

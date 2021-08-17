@@ -1,0 +1,173 @@
+body{
+	font-family: 'Montserrat', sans-serif;
+}
+hr{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.invoice{
+	position: relative;
+	background-color: #f5f5f5;
+}
+.bg-color{
+	background-color: #9575CD;
+	position: absolute;
+	height: 350px;  /* Addition of 100px of invoice-wrapper and min-height of invoice-top */
+	top: 0;
+    left: 0;
+    right: 0;
+}
+.invoice-wrapper{
+	margin-top: 100px;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 900px;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.invoice-top{
+	background-color: #f5f5f5;
+	min-height: 250px;
+	max-height: 250px;
+	overflow: hidden;
+	padding: 40px 60px;
+}
+
+.invoice-top-left .logo{
+	width: 190px;
+}
+.invoice-top-left h1{
+	font-size: 24px;
+	letter-spacing: 1.5px;
+}
+.invoice-top-left h5{
+	font-size: 14px;
+	color: rgba(0,0,0,0.30);
+}
+
+.invoice-top-right{
+	text-align: right;
+}
+.invoice-top-right h4{
+	font-size: 20px;
+}
+.invoice-top-right h6{
+	color: rgba(0,0,0,0.30);
+	font-size: 14px;
+	margin-top: 15px;
+}
+.invoice-top-right h3{
+	color: rgba(0,0,0,0.30);
+	font-size: 14px;
+	margin-top: 15px;
+}
+.invoice-top-right .amount{
+	color: rgba(0, 200, 83, 0.95);
+	font-size: 16px;
+	margin-top: 40px;
+}
+
+.invoice-bottom{
+	background-color: #ffffff;
+	padding: 5px 60px 30px;
+}
+
+.invoice-bottom .service-title{
+	font-size: 18px;
+}
+.invoice-bottom .service-subtitle{
+	font-size: 12px;
+	color: rgba(0,0,0, 0.70);
+	font-weight: 400;
+}
+.invoice-bottom .service-price{
+	font-size: 16px;
+	color: rgba(0, 200, 83, 0.55);
+	text-align: right;
+}
+.invoice-bottom .price-info{
+	font-size: 12px;
+	color: rgba(0,0,0,0.30);
+	text-align: right;
+}
+
+.sub-total, .sub-total-price{
+	margin-top: 30px !important;
+}
+.sub-total, .discount{
+	text-transform: uppercase;
+	color: rgba(0,0,0,0.4);
+	text-align: right;
+	font-size: 13px;
+}
+.sub-total-price, .discount-price{
+	font-size: 16px;
+	color: #333;
+	margin-top: 10px;
+	text-align: right;
+}
+.total-due{
+	text-align: right;
+	font-size: 13px;
+	color: #333;
+}
+.total-due-price{
+	color: rgba(0, 200, 83, 0.95);
+	font-size: 18px;
+	text-align: right;
+}
+
+.footer{
+	background-color: #fafafa;
+	padding: 50px 50px;
+}
+.client-address h6{
+	color: rgba(0,0,0,0.3);
+	font-size: 15px;
+}
+.client-address h2{
+	color: #222;
+	font-size: 16px;
+}
+.client-address h4{
+	font-size: 13px;
+	color: rgba(0,0,0,0.4);
+	line-height: 1.65;
+	font-weight: 400;
+}
+
+.our-address h6{
+	color: rgba(0,0,0,0.3);
+	font-size: 15px;
+}
+.our-address h2{
+	color: #222;
+	font-size: 16px;
+}
+.our-address h4{
+	font-size: 13px;
+	color: rgba(0,0,0,0.4);
+	line-height: 1.65;
+	font-weight: 400;
+}
+
+.note h6{
+	color: rgba(0,0,0,0.3);
+	font-size: 15px;
+}
+.note p{
+	color: rgba(0,0,0,0.4);
+	margin-top: 20px;
+}
+.payment{
+	background-color: #2196F3;
+	padding: 20px;
+}
+.payment h3{
+    margin: 0;
+    font-size: 20px;
+    letter-spacing: 1.5px;
+}
+.payment h3 a{ color: #fff; }
