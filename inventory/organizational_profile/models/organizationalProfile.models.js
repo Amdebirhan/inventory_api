@@ -31,9 +31,9 @@ const OrganizationalProfileSchema = new Schema({
 const OrganizationalProfile = mongoose.model("OrganizationalProfile", OrganizationalProfileSchema);
 module.exports = OrganizationalProfile;
 
-exports.createUser = (userData) => {
-  const user = new User(userData);
-  return user.save();
+exports.createOrganizationalProfile = (organizationData) => {
+  const organizationalProfile = new User(organizationData);
+  return organizationalProfile.save();
 };
 
 module.exports.findById=(itemId)=>{

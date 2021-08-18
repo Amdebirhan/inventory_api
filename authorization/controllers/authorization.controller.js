@@ -5,6 +5,7 @@ const User = require("../../inventory/users/models/users.model");
 const { generateJwt } = require("../../inventory/helpers/generateJwt");
 const roles = require('../../inventory/privilages/helper/roles')
 const rolesAndPrivilages = require('../middlewares/SignupRoleAndPrivilages')
+const organizationalProfile = require("../../inventory/organizational_profile/models/organizationalProfile.models")
 //Validate user schema
 const userSchema = Joi.object().keys({
   email: Joi.string().email({ minDomainSegments: 2 }),
@@ -204,9 +205,10 @@ exports.activate = async (req, res) => {
       user.emailToken = "";
       user.emailTokenExpires = null;
       user.active = true;
-
+        
       await user.save();
-
+      req.body.contact_email = user.email;
+      organizationalProfile.createOrganizationalProfile(req.body.contact_email);
       return res.status(200).json({
         success: true,
         message: "account activated",
