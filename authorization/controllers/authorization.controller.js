@@ -1,9 +1,9 @@
 const Joi = require("joi");
 const { v4: uuid } = require("uuid");
-const { sendEmail } = require("../../helpers/mailler");
-const User = require("../../users/models/users.model");
-const { generateJwt } = require("../../helpers/generateJwt");
-const roles = require('../../privilages/helper/roles')
+const { sendEmail } = require("../../inventory/helpers/mailler");
+const User = require("../../inventory/users/models/users.model");
+const { generateJwt } = require("../../inventory/helpers/generateJwt");
+const roles = require('../../inventory/privilages/helper/roles')
 const rolesAndPrivilages = require('../middlewares/SignupRoleAndPrivilages')
 //Validate user schema
 const userSchema = Joi.object().keys({

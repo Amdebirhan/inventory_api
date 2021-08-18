@@ -2,6 +2,7 @@ const saleorderModel = require('../models/saleOrder.models');
 const invoiceModel = require('../../invoice/models/invoice.models');
 const User = require('../../users/models/users.model');
 const itemModel = require('../../item/models/item.models');
+const historyModel = require('../../item/models/itemHistory.models');
 const sendEmail = require("../../helpers/mailler");
 const validateSchema = require('../middlewares/saleOrder.middleware');
 
@@ -13,9 +14,23 @@ exports.insertSO = async (req, res) => {
         for (let i = 0; i < result.value.itemId.length; i++) {
             const item = itemModel.findOne({ _id: itemId });
             itemQuantity = item.quantity - result.value.itemId[i].quantity;
+            const history = {
+                organization_ID: req.decoded.organizationalId,
+                item_ID:itemId,
+                    changes: [{
+                        quantity:itemQuantity
+                }]
+            }
+
+            historyModel.createHistory(history)
+
             itemModel.updateMany({ "_id": result.value.itemId[i].id }, { "$set": { "quantity": itemQuantity } }, callback);
         }
 
+        
+        
+
+        
         //check for notification to do that we need to check every thing 
         userId = req.decoded.id;
         const user = await User.findById(userId);
@@ -79,8 +94,28 @@ exports.list = (req, res) => {
     })
 };
 
-//deleteSO
+//can not delete a SO only make the status cancelled
+
 exports.removeById = (req, res) => {
+    //first get the so
+    //loop and update the item,history and status
+    result = saleorderModel.findById(req.body.SOId);
+    for (let i = 0; i < result.itemId.length; i++) {
+        const item = itemModel.findOne({ _id: itemId });
+        itemQuantity = item.quantity + result.value.itemId[i].quantity;
+        const history = {
+            organization_ID: req.decoded.organizationalId,
+            item_ID:itemId,
+                changes: [{
+                    quantity:itemQuantity
+            }]
+        }
+
+        historyModel.createHistory(history)
+
+        itemModel.updateMany({ "_id": req.body.SOId }, { "$set": { "quantity": itemQuantity } }, callback);
+    }
+    saleorderModel.updateMany({ "_id": result.value.itemId[i].id }, { "$set": { "status": "cancelled" } });
     saleorderModel.removeById(req.params.SOId)
         .then((result) => {
             res.status(204).send({});

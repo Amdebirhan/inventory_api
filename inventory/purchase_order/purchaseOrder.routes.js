@@ -38,14 +38,14 @@ router.patch('/update-PO/:POId',
     cleanBody,
     validateToken,
     privilages.getPrivilages,
-    userController.updatePO,
+    POController.updatePO,
 );
 
 router.delete('/remove-PO/:POId', [
     cleanBody,
     validateToken,
     privilages.getPrivilages,
-    userController.removeById
+    POController.removeById
 ]);
 
 

@@ -1,6 +1,6 @@
 //create a mongoose connection
 const env= require('../config/env.config');
-const mongoose=require('mongoose');
+const mongoose=require("mongoose");
 let count = 0;//to count the number of retry connection
 
 const option ={

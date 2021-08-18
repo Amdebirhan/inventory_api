@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const env = require('../../common/config/env.config');
-const User = require("../../users/models/users.model");
+const env = require('../../inventory/common/config/env.config');
+const User = require("../../inventory/users/models/users.model");
 
 
 async function validateToken(req, res, next) {

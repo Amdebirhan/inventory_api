@@ -1,4 +1,4 @@
-const userModel = require('../../users/models/users.model');
+const userModel = require('../../inventory/users/models/users.model');
 const url = require("url");
 const { Console } = require('console');
 

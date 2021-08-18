@@ -7,14 +7,16 @@ const privilages = require("../../authorization/middlewares/verifyPrivilageRoute
 const express = require('express');
 router = express.Router();
 
-router.Post(('/insert-customer'), [
+router.post("/insert-customer", [
   cleanBody,
   validateToken,
   privilages.getPrivilages,
   customerController.insert
 ]);
 
-router.get('/get-customer/:customerId').post(function (req, res) {
+
+
+router.get('/get-customer/:customerId', function (req, res) {
   [
     cleanBody,
     validateToken,
@@ -31,17 +33,18 @@ router.get(('/get-customers/'), [
 ]);
 
 router.patch(('/patch-customer/:customerId'), [
-    cleanBody,
-    validateToken,
-    privilages.getPrivilages,
-    customerController.patchById
-  ]);
+  cleanBody,
+  validateToken,
+  privilages.getPrivilages,
+  customerController.patchById
+]);
 
-  router.delete(('/remove-customer/:customerId'), [
-    cleanBody,
-    validateToken,
-    privilages.getPrivilages,
-    customerController.delete
-  ]);
+router.delete('/remove-customer/:userId', function (req, res) {[
+  cleanBody,
+  validateToken,
+  privilages.getPrivilages,
+  customerController.delete
+]});
+
 
 module.exports = router;

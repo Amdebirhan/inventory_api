@@ -1,4 +1,4 @@
-const config = require('./common/config/env.config');
+const config = require('./inventory/common/config/env.config');
 const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
@@ -6,16 +6,19 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server,{cors:{origin:"*"}});
 
 const authRouter = require('./authorization/routes.config');
-const userRouter = require('./users/routes.config');
-const roleRouter = require('./privilages/Role/routes.config');
-const resourceRouter = require('./privilages/Resource/routes.config');
-const rightRouter = require('./privilages/Resource/routes.config');
-var invoicesRouter = require('./payment/invoice/routes.config');
-// const supplierRouter = require('./suppliers/routes/supplierroute');
-// const purchaseorderRouter = require('./purchaseorders/routes/purchaseorderroute');
-// const saleorderRouter = require('./saleorders/routes/saleorderroute');
-// const billRouter = require('./bills/routes/billroute');
-// const invoiceRouter = require('./invoices/routes/invoiceroute'); 
+const userRouter = require('./inventory/users/routes.config');
+const roleRouter = require('./inventory/privilages/Role/routes.config');
+const resourceRouter = require('./inventory/privilages/Resource/routes.config');
+const rightRouter = require('./inventory/privilages/Resource/routes.config');
+var invoicesRouter = require('./inventory/invoice/invoice.routes');
+var branchRouter = require('./inventory/branch/branch.routes');
+var billRouter = require('./inventory/bill/bill.routes');
+var customerRouter = require('./inventory/customer/customer.routes');
+var itemRouter = require('./inventory/item/item.routes');
+var organizationalProfileRouter = require('./inventory/organizational_profile/organizationalProfile.routes');
+var purchaseOrderRouter = require('./inventory/purchase_order/purchaseOrder.routes');
+var saleOrderRouter = require('./inventory/sale_order/saleOrder.routes');
+var warehouseRouter = require('./inventory/warehouse/warehouse.routes');
 
 
 app.use(function (req, res, next) {
@@ -39,14 +42,15 @@ app.use('/auth', authRouter); //register auth routes
 app.use('/user', userRouter); //register users routes
 app.use('/role', roleRouter); //register role routes
 app.use('/resource', resourceRouter); //register resource routes
-app.use('/right', rightRouter); //register resource routes  
-app.use('/invoices', invoicesRouter);
-
-// app.use('/supplier', supplierRouter);
-// app.use('/purchaseorder', purchaseorderRouter);
-// app.use('/saleorder', saleorderRouter);
-// app.use('/bill', billRouter);
-// app.use('/invoice', invoiceRouter); 
+app.use('/invoice', invoicesRouter); //register invoice routes  
+app.use('/branch', branchRouter); //register branch routes  
+app.use('/bill', billRouter); //register bill routes  
+app.use('/customer', customerRouter); //register customer routes  
+app.use('/item', itemRouter); //register item routes   
+app.use('/organization', organizationalProfileRouter); //register organizational Profile routes  
+app.use('/purchase-order', purchaseOrderRouter); //register PO routes  
+app.use('/sale-order', saleOrderRouter); //register sale-order routes  
+app.use('/warehouse', warehouseRouter); //register warehouse routes  
 
 
 server.listen(config.port,()=> {

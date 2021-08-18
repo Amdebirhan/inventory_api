@@ -1,6 +1,6 @@
 const User = require("../models/users.model");
 const schemaValidation = require("../middleware/requestValidation");
-const rights = require('../../authorization/middlewares/SignupRoleAndPrivilages');
+const rights = require('../../../authorization/middlewares/SignupRoleAndPrivilages');
 const privilages = require('../../privilages/helper/privilageRoutes');
 
 exports.insert = async (req, res) => {

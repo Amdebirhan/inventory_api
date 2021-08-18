@@ -2,7 +2,6 @@ const organizationalProfileSchema = require('../../organizational_profile/models
 const customerSchema = require('../../customer/models/customer.models');
 const userSchema = require('../../users/models/users.model');
 const saleOrderSchema = require('../../sale_order/models/saleOrder.models');
-const statusSchema = require('../../status/models/status.models');
 const mongoose = require('../../common/services/mongoose.service').mongoose;
 const Schema = mongoose.Schema;
 const Joi = require('joi');
@@ -12,7 +11,7 @@ const invoiceSchema = new Schema({
     customer_ID:{ type: Schema.Types.ObjectId, ref: customerSchema },
     sales_person_ID:{ type: Schema.Types.ObjectId, ref: userSchema },
     sale_order_ID:{ type: Schema.Types.ObjectId, ref: saleOrderSchema },
-    status_ID: { type: Schema.Types.ObjectId, ref: statusSchema }, 
+    status: { type:String}, 
     invoice_date:{ type: Date}, 
   },
 

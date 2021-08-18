@@ -1,4 +1,4 @@
-const organiizationalProfileModel = require("../../backup/organizational_profile/models/organizationalProfile.models");
+const organiizationalProfileModel = require("../../inventory/organizational_profile/models/organizationalProfile.models");
 
 exports.verifyOrganization = (req, res) => {
 

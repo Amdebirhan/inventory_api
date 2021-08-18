@@ -1,8 +1,6 @@
-const roleModel = require('../../privilages/Role/model/role.model');
-const privilageModel = require('../../privilages/Resource/model/resource.model')
-const defaultPrivilages=require('../../privilages/helper/privilageRoutes');
-const resourceController = require('../../privilages/Resource/controller/resource.controller');
-const roleController = require('../../privilages/Role/controller/role.controller');
+const roleModel = require('../../inventory/privilages/Role/model/role.model');
+const privilageModel = require('../../inventory/privilages/Resource/model/resource.model')
+const defaultPrivilages=require('../../inventory/privilages/helper/privilageRoutes');
 
 
 exports.assignRole=async (req,res)=>{

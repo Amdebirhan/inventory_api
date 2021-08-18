@@ -1,6 +1,8 @@
 const purchaseorderModel = require('../models/purchaseOrder.models');
 const billModel = require('../../bill/models/bill.models');
 const User = require('../../users/models/users.model');
+const itemModel = require('../../item/models/item.models');
+const historyModel = require('../../item/models/itemHistory.models');
 const validateSchema = require('../middlewares/purchaseOrder.middleware');
 
 exports.insertPO = async (req, res) => {
@@ -68,7 +70,59 @@ exports.list = (req, res) => {
     })
  };   
 
- //deletePO
+ //half recived po 
+ exports.halfRecived = (req,res)=>{
+    result=purchaseorderModel.findById(req.params.POId);
+    for (let i = 0; i < result.itemId.length; i++) {
+        const item = itemModel.findOne({ _id: itemId });
+        recivedamount =  result.itemId[i].leftamount - req.body.item[i].recivedAmount;
+        leftAmount = result.itemId[i].quantity - (result.itemId[i].recivedamount + recivedAmount ); 
+        curentOnHand = item.quantity+req.body.item[i].recivedAmount;
+        const history = {
+            organization_ID: req.decoded.organizationalId,
+            item_ID:itemId,
+                changes: [{
+                    quantity:curentOnHand
+            }]
+        }
+
+        historyModel.createHistory(history)
+
+        itemModel.updateMany({ "_id":result.itemId[i].id}, { "$set": { "quantity": curentOnHand } });
+        purchaseorderModel.updateMany({ "_id":result._id}, { "$set": { "itemId[i].recivedamount": recivedamount,"itemId[i].leftamount": leftAmount, } });
+    }
+    
+    purchaseorderModel.updateMany({ "_id":result._id}, { "$set": { "status": "half Received" } });
+
+ }
+
+  //fully received po 
+  exports.Recived = (req,res)=>{
+    result=purchaseorderModel.findById(req.params.POId);
+    for (let i = 0; i < result.itemId.length; i++) {
+        const item = itemModel.findOne({ _id: itemId });
+        recivedamount =  result.itemId[i].quantity;
+        leftAmount =recivedAmount - result.itemId[i].quantity; 
+        curentOnHand = item.quantity+req.body.item[i].recivedAmount;
+        const history = {
+            organization_ID: req.decoded.organizationalId,
+            item_ID:itemId,
+                changes: [{
+                    quantity:curentOnHand
+            }]
+        }
+
+        historyModel.createHistory(history)
+
+        itemModel.updateMany({ "_id":result.itemId[i].id}, { "$set": { "quantity": curentOnHand } });
+        purchaseorderModel.updateMany({ "_id":result._id}, { "$set": { "itemId[i].recivedamount": recivedamount,"itemId[i].leftamount": leftAmount, } });
+    }
+
+     purchaseorderModel.updateMany({ "_id":result._id}, { "$set": { "status": "Received" } });
+
+ }
+
+ //cancelled PO
  exports.removeById = (req, res) => {
     purchaseorderModel.removeById(req.params.POId)
         .then((result)=>{

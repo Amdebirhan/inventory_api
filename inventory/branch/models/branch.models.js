@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 const branchSchema = new Schema({
     organizational_ID:{ type: Schema.Types.ObjectId, ref: organizationalProfileSchema },
     warehouse_ID:{ type: Schema.Types.ObjectId, ref: warehouseSchema },
-    user_ID: { type: Schema.Types.ObjectId, ref: userSchema },
+    //user_ID: { type: Schema.Types.ObjectId, ref: userSchema },
     active: { type: Boolean, default: true },
     branch_name: { type: String },
     email: { type: String, unique: true },

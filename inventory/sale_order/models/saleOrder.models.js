@@ -27,7 +27,8 @@ const saleorderSchema = new Schema({
     discount: { type: String},
     shipment_charge: { type: String},
     shippedamount: { type: String},
-    leftamount: { type: String}
+    leftamount: { type: String},
+    status:{type:String}
   },
 
   {

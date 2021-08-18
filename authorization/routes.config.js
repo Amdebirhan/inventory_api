@@ -1,4 +1,4 @@
-const cleanBody = require("../common/middlewares/cleanbody");
+const cleanBody = require("../inventory/common/middlewares/cleanbody");
 const authController = require("./controllers/authorization.controller");
 const { validateToken } = require("../authorization/middlewares/validateToken");
 const express = require('express');

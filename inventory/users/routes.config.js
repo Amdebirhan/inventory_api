@@ -1,7 +1,7 @@
 const cleanBody = require("../common/middlewares/cleanbody");
 const userController = require("./controllers/users.controller");
-const { validateToken } = require("../authorization/middlewares/validateToken");
-const privilages = require("../authorization/middlewares/verifyPrivilageRoutesAndRequests");
+const { validateToken } = require("../../authorization/middlewares/validateToken");
+const privilages = require("../../authorization/middlewares/verifyPrivilageRoutesAndRequests");
 const express = require('express');
 const url = require("url");
 router = express.Router();

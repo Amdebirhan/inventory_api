@@ -1,28 +1,42 @@
-const saleorderModel = require('../models/saleOrder.models');
 const invoiceModel = require('../../invoice/models/invoice.models');
 const User = require('../../users/models/users.model');
 const itemModel = require('../models/item.models');
+const historyModel = require('../models/itemHistory.models');
 
 exports.insert = (req, res) => {
+
     itemModel.createItem(req.body)
         .then((result) => {
-            res.status(201).send({id: result._id});
+            id: result._id;
         });
- };
 
- exports.getById = (req, res) => {
+        const history = {
+            organization_ID: req.decoded.organizationalId,
+            item_ID:id,
+                changes: [{
+                    quantity:req.body.quantity
+            }]
+        }
+        historyModel.createHistory(history).then((result) => {
+            return res.status(201).send({});
+        });
+};
+
+
+
+exports.getById = (req, res) => {
     itemModel.findById(req.params.itemId).then((result) => {
         res.status(200).send(result);
     });
- };
+};
 
- exports.patchById = (req, res) => {
+exports.patchById = (req, res) => {
     itemModel.patchUser(req.params.itemId, req.body).then((result) => {
-            res.status(204).send({});
+        res.status(204).send({});
     });
- };
+};
 
- exports.list = (req, res) => {
+exports.list = (req, res) => {
     let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
     let page = 0;
     if (req.query) {
@@ -34,11 +48,11 @@ exports.insert = (req, res) => {
     itemModel.list(limit, page).then((result) => {
         res.status(200).send(result);
     })
- };
+};
 
- exports.removeById = (req, res) => {
+exports.removeById = (req, res) => {
     itemModel.removeById(req.params.itemId)
-        .then((result)=>{
+        .then((result) => {
             res.status(204).send({});
         });
-  };
+};

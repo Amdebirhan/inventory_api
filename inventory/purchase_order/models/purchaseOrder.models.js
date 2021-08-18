@@ -3,7 +3,6 @@ const warehouseSchema = require('../../warehouse/models/warehouse.models');
 const supplierSchema = require('../../supplier/models/supplier.models');
 const itemSchema = require('../../item/models/item.models');
 const branchSchema = require('../../branch/models/branch.models');
-const statusSchema = require('../../status/models/status.models');
 const mongoose = require('../../common/services/mongoose.service').mongoose;
 const Schema = mongoose.Schema;
 const Joi = require('joi');
@@ -15,20 +14,20 @@ const purchaseorderSchema = new Schema({
   branchId: { type: Schema.Types.ObjectId, ref: branchSchema },
   itemId:[{
     id:{type: Schema.Types.ObjectId, ref: itemSchema},
+    price:{type: String},
+    quantity: {type: String},
+  recivedamount: { type: String },
+  leftamount: { type: String }
   }],
   purchase_order_date: { type: Date },
   expected_delivery_date: { type: Date },
   payment_term: { type: String },
   due_date: { type: String },
   shipment_type: { type: String },
-  price: { type: String },
-  quantity: { type: String },
   tax: { type: String },
   discount: { type: String },
   shipment_charge: { type: String },
-  statusId: { type: Schema.Types.ObjectId, ref: statusSchema },
-  recivedamount: { type: String },
-  leftamount: { type: String }
+  status: { type: String },
 },
 
   {

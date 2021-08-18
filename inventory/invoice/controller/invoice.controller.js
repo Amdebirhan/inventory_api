@@ -95,16 +95,13 @@ exports.generatePdf = async (req, res, next) => {
     })
 }
 
-
 exports.changeStatus = (req, res) => {
     saleorderModel.findById(req.params.invoiceId,req.params.statusId).then((result) => {
         res.status(200).send(result);
     });
 };
 
-
 //send pdf using email
-
 fs.readFile("E:/syed/nodejs/tasks/mail/mailwithdb/sheet.pdf",function(err,data){
     var mailOptions={
     from:' <mail@gmail.com>',

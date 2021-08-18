@@ -7,21 +7,21 @@ const privilages = require("../../authorization/middlewares/verifyPrivilageRoute
 const express = require('express');
 router = express.Router();
 
-router.Post(('/insert-branch'), [
-  cleanBody,
-  validateToken,
-  privilages.getPrivilages,
-  branchController.insert
-]);
-
-router.get('/get-branch/:branchId').post(function (req, res) {
+router.post('/insert-branch',
   [
     cleanBody,
     validateToken,
     privilages.getPrivilages,
-    branchController.getById
-  ]
-})
+    branchController.insert
+  ]);
+
+router.get('/get-branch/:branchId', [
+  cleanBody,
+  validateToken,
+  privilages.getPrivilages,
+  branchController.getById
+]
+)
 
 router.get(('/get-branchs/'), [
   cleanBody,
@@ -31,17 +31,18 @@ router.get(('/get-branchs/'), [
 ]);
 
 router.patch(('/patch-branch/:branchId'), [
-    cleanBody,
-    validateToken,
-    privilages.getPrivilages,
-    branchController.patchById
-  ]);
+  cleanBody,
+  validateToken,
+  privilages.getPrivilages,
+  branchController.patchById
+]);
 
-  router.delete(('/remove-branch/:branchId'), [
+router.delete('/remove-branch/:branchId',
+  [
     cleanBody,
     validateToken,
     privilages.getPrivilages,
-    branchController.delete
+    branchController.insert
   ]);
 
 module.exports = router;

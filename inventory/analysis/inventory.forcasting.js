@@ -4,66 +4,23 @@ const User = require('../users/models/users.model');
 const itemModel = require('../item/models/item.models');
 const sendEmail = require("../helpers/mailler");
 
-exports.insertSO = async (req, res) => {
-    try {
-        
-       
-    } catch (error) {
-        return res.status(500).json({
-            error: true,
-            message: "Couldn't insert saleorder. Please try again later.",
-        });
-    }
-}
 
-//insert SO to bill
-exports.convertSOToInvoice = async (req, res) => {
+exports.Inventoryturnover = async (req, res) => {
     try {
-        result = validateSchema.datavalidation(req.body);
-        const newinvoice = new invoiceModel(result.value);
-        await newinvoice.save();
+        //Inventory turnover measures the number of times a company has sold and replaced inventoryover a given time period:
+        //calculate inventory turnover based on the date that a user inters
+        //Average inventory = (Beginning inventory + Ending inventory) / Months in the period
+        //BeginningInventory means inventory we want for a specific time 
+        //BeginningInventory = quantity of each item in there warehouse
+
+        req.decoded.organizationalId;
+        //goto item search item with the bigining of the month
+        inventoryTurnover = costofgoodsold/averageInventory;
 
     } catch (error) {
         return res.status(500).json({
             error: true,
-            message: "Couldn't convert to invoice. Please try again later.",
+            message: "Couldn't make an inventory turnoves. Please try again later.",
         });
     }
 }
-
-//update the SO table
-exports.updateSO = async (req, res) => {
-    saleorderModel.patchSO(req.params.SOId, req.body).then((result) => {
-        res.status(204).send({});
-    });
-}
-
-//list all SOs
-exports.list = (req, res) => {
-    let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
-    let page = 0;
-    if (req.query) {
-        if (req.query.page) {
-            req.query.page = parseInt(req.query.page);
-            page = Number.isInteger(req.query.page) ? req.query.page : 0;
-        }
-    }
-    saleorderModel.list(limit, page).then((result) => {
-        res.status(200).send(result);
-    })
-};
-
-//deleteSO
-exports.removeById = (req, res) => {
-    saleorderModel.removeById(req.params.SOId)
-        .then((result) => {
-            res.status(204).send({});
-        });
-};
-
-exports.getById = (req, res) => {
-    saleorderModel.findById(req.params.SOId).then((result) => {
-        res.status(200).send(result);
-    });
-};
-
