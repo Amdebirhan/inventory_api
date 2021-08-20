@@ -4,7 +4,7 @@ const itemModel = require('../models/item.models');
 const historyModel = require('../models/itemHistory.models');
 
 exports.insert = (req, res) => {
-
+console.log(req.body)
     itemModel.createItem(req.body)
         .then((result) => {
             id: result._id;

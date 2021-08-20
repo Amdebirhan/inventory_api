@@ -23,7 +23,7 @@ router.patch("/forgot", [
     authController.forgetPassword
 ]);
 
-router.patch("/reset", [
+router.patch("/reset/:token/:id/:orgId", [
     cleanBody,
     authController.resetPassword
 ]);
