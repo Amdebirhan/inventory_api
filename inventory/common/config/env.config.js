@@ -2,6 +2,7 @@ module.exports = {
     "port":3600,
     "appEndpoint":"http://localhost:3600",
     "apiEndpoint":"http://localhost:3600",
+    "clientURL":"http://localhost:43055/register/passwordrest",
     "jwt_secret":"myjwt!!creeeTitisAmde",
     "jwt_expiration_in_seconds":36000,
     "enviroment":"dev",

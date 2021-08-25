@@ -4,7 +4,7 @@ const branchModel = require("../../branch/models/branch.models");
 const itemModel = require("../../item/models/item.models");
 
 
-exports.insert = (req, res) => {
+module.exports.insert = (req, res) => {
     warehouseModel.createWarehouse(req.body)
         .then((result) => {
             res.status(201).send({id: result._id});
@@ -12,20 +12,20 @@ exports.insert = (req, res) => {
  };
 
 
- exports.getById = (req, res) => {
+module.exports.getById = (req, res) => {
     warehouseModel.findById(req.params.warehouseId).then((result) => {
         res.status(200).send(result);
     });
  };
 
- exports.patchById = (req, res) => {
+module.exports.patchById = (req, res) => {
     warehouseModel.patchUser(req.params.warehouseId, req.body).then((result) => {
             res.status(204).send({});
     });
  };
 
 
- exports.list = (req, res) => {
+module.exports.list = (req, res) => {
     let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
     let page = 0;
     if (req.query) {
@@ -40,17 +40,17 @@ exports.insert = (req, res) => {
  };
 
 
- exports.removeById = (req, res) => {
+module.exports.removeById = (req, res) => {
     branches=branchModel.findOne({warehouse_ID:req.body.warehouseId});
     items=itemModel.findOne({warehouse_ID:req.body.warehouseId});
 
-    if(branches!==null){
+    if(branches){
         return res.status(400).json({
             error: true,
             message: "can't delete warehouse with branch on it"
           });
         
-    }else if( items!== null){
+    }else if(items){
         return res.status(400).json({
             error: true,
             message: "can't delete warehouse with branches and items with it"

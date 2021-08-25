@@ -27,7 +27,11 @@ const purchaseorderSchema = new Schema({
   tax: { type: String },
   discount: { type: String },
   shipment_charge: { type: String },
-  status: { type: String },
+  status: {
+    type: String,
+    enum: ['Draft', 'Open','Closed', 'Cancelled','Partially Billed','Billed'],
+    default: 'Draft'
+           },
 },
 
   {

@@ -28,27 +28,30 @@ const warehouseSchema = new Schema({
 const warehouse = mongoose.model("warehouse", warehouseSchema);
 module.exports = warehouse;
 
-exports.createWarehouse = (WHData) => {
-    const warehouses = new User(WHData);
+module.exports.createWarehouse = (WHData) => {
+    const warehouses = new warehouse(WHData);
     return warehouses.save();
   };
 
-  exports.findById = (id) => {
-    return warehouse.findById(id).then((result) => {
+module.exports.findById = (itemId) => {
+    return warehouse.findOne({ _id: itemId }).then((result) => {
+      if (result === null) {
+        return result;
+      } else {
         result = result.toJSON();
-        delete result._id;
         delete result.__v;
         return result;
+      }
     });
-};
+  }
 
-exports.patchUser = (id, WHData) => {
+module.exports.patchUser = (id, WHData) => {
     return warehouse.findOneAndUpdate({
         _id: id
-    }, userData);
+    }, WHData);
 };
 
-exports.list = (perPage, page) => {
+module.exports.list = (perPage, page) => {
     return new Promise((resolve, reject) => {
         warehouse.find()
             .limit(perPage)
@@ -63,7 +66,7 @@ exports.list = (perPage, page) => {
     });
 };
 
-exports.removeById = (userId) => {
+module.exports.removeById = (userId) => {
     return new Promise((resolve, reject) => {
         warehouse.deleteMany({_id: userId}, (err) => {
             if (err) {

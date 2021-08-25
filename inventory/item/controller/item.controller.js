@@ -11,7 +11,7 @@ exports.insert = (req, res) => {
         });
 
         const history = {
-            organization_ID: req.decoded.organizationalId,
+            organizationalId: req.decoded.organizationalId,
             item_ID:id,
                 changes: [{
                     quantity:req.body.quantity

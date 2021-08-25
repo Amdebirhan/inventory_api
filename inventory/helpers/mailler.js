@@ -1,12 +1,12 @@
 const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
-const env= require('../common/config/env.config');
+const env = require('../common/config/env.config');
 const fs = require('fs');
 const path = require("path");
 
-async function sendEmail(email, subject, payload, template) {
+async function sendEmail(email, subject, payload, template,filename,path,contentType) {
   try {
-      
+
     const smtpEndpoint = env.smtpEndpoint;
 
     const port = env.email_port;
@@ -16,6 +16,12 @@ async function sendEmail(email, subject, payload, template) {
     var toAddress = email;
 
     var subject = subject;
+
+    var attachment =[{
+      filename: filename,
+      path: path,
+      contentType: contentType
+    }]
 
     const smtpUsername = env.smtpUsername;
 
@@ -30,7 +36,7 @@ async function sendEmail(email, subject, payload, template) {
       host: smtpEndpoint,
       port: port,
       //secure: true, // true for 465, false for other ports
-      secure:false,
+      secure: false,
       requireTLS: true,
       auth: {
         user: senderAddress,
@@ -40,20 +46,21 @@ async function sendEmail(email, subject, payload, template) {
 
     // Specify the fields in the email.
     const mailOptions = {
-            from: senderAddress,
-            to: toAddress,
-            subject: subject,
-            html: compiledTemplate(payload),
-      };
-      
+      from: senderAddress,
+      to: toAddress,
+      subject: subject,
+      html: compiledTemplate(payload),
+      attachments: attachment,
+    };
 
 
-        // Send email
-       let info= transporter.sendMail(mailOptions);
-       if(info){
-        return { error: false };
-       }
-          return { error: true };
+
+    // Send email
+    let info = transporter.sendMail(mailOptions);
+    if (info) {
+      return { error: false };
+    }
+    return { error: true };
   } catch (error) {
     console.error("send-email-error", error);
     return {
@@ -64,3 +71,12 @@ async function sendEmail(email, subject, payload, template) {
 }
 
 module.exports = { sendEmail };
+
+
+
+
+
+
+
+
+

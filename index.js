@@ -14,11 +14,14 @@ var invoicesRouter = require('./inventory/invoice/invoice.routes');
 var branchRouter = require('./inventory/branch/branch.routes');
 var billRouter = require('./inventory/bill/bill.routes');
 var customerRouter = require('./inventory/customer/customer.routes');
+var supplierRouter = require('./inventory/supplier/supplier.routes');
 var itemRouter = require('./inventory/item/item.routes');
 var organizationalProfileRouter = require('./inventory/organizational_profile/organizationalProfile.routes');
 var purchaseOrderRouter = require('./inventory/purchase_order/purchaseOrder.routes');
 var saleOrderRouter = require('./inventory/sale_order/saleOrder.routes');
 var warehouseRouter = require('./inventory/warehouse/warehouse.routes');
+
+
 
 
 app.use(function (req, res, next) {
@@ -46,6 +49,7 @@ app.use('/invoice', invoicesRouter); //register invoice routes
 app.use('/branch', branchRouter); //register branch routes  
 app.use('/bill', billRouter); //register bill routes  
 app.use('/customer', customerRouter); //register customer routes  
+app.use('/supplier', supplierRouter); //register supplier routes  
 app.use('/item', itemRouter); //register item routes   
 app.use('/organization', organizationalProfileRouter); //register organizational Profile routes  
 app.use('/purchase-order', purchaseOrderRouter); //register PO routes  

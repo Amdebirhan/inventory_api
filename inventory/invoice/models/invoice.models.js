@@ -11,7 +11,11 @@ const invoiceSchema = new Schema({
     customer_ID:{ type: Schema.Types.ObjectId, ref: customerSchema },
     sales_person_ID:{ type: Schema.Types.ObjectId, ref: userSchema },
     sale_order_ID:{ type: Schema.Types.ObjectId, ref: saleOrderSchema },
-    status: { type:String}, 
+    status: {
+      type: String,
+      enum: ['Draft', 'Sent', 'Partially Paid','Paid','Overdue','Canceled'],
+      default: 'Draft'
+             },
     invoice_date:{ type: Date}, 
   },
 

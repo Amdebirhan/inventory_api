@@ -18,8 +18,6 @@ const customerSchema = new Schema({
     street1: { type: String },
     street2: { type: String },
 
-
-
 },
 
     {
@@ -33,27 +31,30 @@ const customer = mongoose.model("customer", customerSchema);
 module.exports = customer;
 
 
-exports.createUser = (customerData) => {
+module.exports.createCustomer = (customerData) => {
   const customers = new customer(customerData);
   return customers.save();
 };
 
-exports.findById = (id) => {
-  return customer.findById(id).then((result) => {
+module.exports.findById = (itemId) => {
+  return customer.findOne({ _id: itemId }).then((result) => {
+    if (result === null) {
+      return result;
+    } else {
       result = result.toJSON();
-      delete result._id;
       delete result.__v;
       return result;
+    }
   });
-};
+}
 
-exports.patchCustomer = (id, customerData) => {
+module.exports.patchCustomer = (id, customerData) => {
   return customer.findOneAndUpdate({
       _id: id
   }, customerData);
 };
 
-exports.list = (perPage, page) => {
+module.exports.list = (perPage, page) => {
   return new Promise((resolve, reject) => {
     customer.find()
           .limit(perPage)
@@ -68,7 +69,7 @@ exports.list = (perPage, page) => {
   });
 };
 
-exports.removeById = (customerId) => {
+module.exports.removeById = (customerId) => {
   return new Promise((resolve, reject) => {
     customer.deleteMany({_id: customerId}, (err) => {
           if (err) {

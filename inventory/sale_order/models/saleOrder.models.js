@@ -28,7 +28,11 @@ const saleorderSchema = new Schema({
     shipment_charge: { type: String},
     shippedamount: { type: String},
     leftamount: { type: String},
-    status:{type:String}
+    status:{
+      type: String,
+      enum: ['Draft','Sent','Closed','Partly paid','Paid','Canceled'],
+      default: 'Draft'
+             },
   },
 
   {

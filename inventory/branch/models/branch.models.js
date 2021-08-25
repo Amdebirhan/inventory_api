@@ -8,7 +8,6 @@ const bcrypt = require('bcryptjs');
 const branchSchema = new Schema({
     organizational_ID:{ type: Schema.Types.ObjectId, ref: organizationalProfileSchema },
     warehouse_ID:{ type: Schema.Types.ObjectId, ref: warehouseSchema },
-    //user_ID: { type: Schema.Types.ObjectId, ref: userSchema },
     active: { type: Boolean, default: true },
     branch_name: { type: String },
     email: { type: String, unique: true },
@@ -30,27 +29,32 @@ const branchSchema = new Schema({
 const branch = mongoose.model("branch", branchSchema);
 module.exports = branch;
 
-exports.createUser = (userData) => {
+module.exports.createUser = (userData) => {
     const branchs = new branch(userData);
     return branchs.save();
 };
 
-exports.findById = (id) => {
-    return branch.findById(id).then((result) => {
+
+module.exports.findById = (itemId) => {
+    return branch.findOne({ _id: itemId }).then((result) => {
+      if (result === null) {
+        return result;
+      } else {
         result = result.toJSON();
-        delete result._id;
         delete result.__v;
         return result;
+      }
     });
-};
+  }
 
-exports.patchUser = (id, userData) => {
+module.exports.patchUser = (id, userData) => {
     return branch.findOneAndUpdate({
         _id: id
     }, userData);
 };
 
-exports.list = (perPage, page) => {
+
+module.exports.list = (perPage, page) => {
     return new Promise((resolve, reject) => {
         branch.find()
             .limit(perPage)
@@ -65,7 +69,7 @@ exports.list = (perPage, page) => {
     });
 };
 
-exports.removeById = (userId) => {
+module.exports.removeById = (userId) => {
     return new Promise((resolve, reject) => {
         branch.deleteMany({_id: userId}, (err) => {
             if (err) {

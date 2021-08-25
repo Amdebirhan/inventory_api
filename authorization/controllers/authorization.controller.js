@@ -5,7 +5,9 @@ const User = require("../../inventory/users/models/users.model");
 const { generateJwt } = require("../../inventory/helpers/generateJwt");
 const roles = require('../../inventory/privilages/helper/roles')
 const rolesAndPrivilages = require('../middlewares/SignupRoleAndPrivilages')
-const organizationalProfile = require("../../inventory/organizational_profile/models/organizationalProfile.models")
+const organizationalProfile = require("../../inventory/organizational_profile/middlewares/organizationalProfile.middleware");
+const crypto=require("crypto");
+const clientURL= require("../../inventory/common/config/env.config").clientURL;
 //Validate user schema
 const userSchema = Joi.object().keys({
   email: Joi.string().email({ minDomainSegments: 2 }),
@@ -183,7 +185,7 @@ exports.activate = async (req, res) => {
         message: "please make a valid request"
       });
     }
-
+    
     const user = await User.findOne({
       email: email,
       emailToken: code,
@@ -207,8 +209,12 @@ exports.activate = async (req, res) => {
       user.active = true;
         
       await user.save();
-      req.body.contact_email = user.email;
-      organizationalProfile.createOrganizationalProfile(req.body.contact_email);
+
+      orgProfile={
+        contact_email :user.email,
+      }
+      organizationalProfile.createOrganizationalProfile(orgProfile);
+
       return res.status(200).json({
         success: true,
         message: "account activated",
@@ -248,11 +254,11 @@ exports.forgetPassword = async (req, res) => {
     let resetToken = crypto.randomBytes(32).toString("hex");
     const hash = await User.hashPassword(resetToken);
 
-    const link = `${clientURL}/passwordReset?token=${resetToken}&id=${user._id}`;
+    const link = `${clientURL}?token=${resetToken}&id=${user._id}`;
     let Response = await sendEmail(user.email,
       "Password Reset Request",
       { name: user.firstName, link: link, },
-      "../../helpers/templates/resetPassword.handlebars");
+      "../../inventory/helpers/templates/resetPassword.handlebars");
 
 
     if (Response.error) {

@@ -9,42 +9,42 @@ router = express.Router();
 
 router.post("/insert-warehouse", [
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
+  // validateToken,
+  // privilages.getPrivilages,
   warehouseController.insert
 ]);
 
-
-
-router.get('/get-warehouse/:warehouseId', function (req, res) {
+router.get('/get-warehouse/:warehouseId',
   [
-    cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+   cleanBody,
+    // validateToken,
+    // privilages.getPrivilages,
     warehouseController.getById
   ]
-})
+);
 
 router.get(('/get-warehouse/'), [
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
+  // validateToken,
+  // privilages.getPrivilages,
   warehouseController.list
 ]);
 
 router.patch(('/patch-warehouse/:warehouseId'), [
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
+  // validateToken,
+  // privilages.getPrivilages,
   warehouseController.patchById
 ]);
 
-router.delete('/remove-warehouse/:warehouseId', function (req, res) {[
-  cleanBody,
-  validateToken,
-  privilages.getPrivilages,
-  warehouseController.delete
-]});
+router.delete(('/remove-warehouse/:warehouseId'), [
+  //cleanBody,
+  // validateToken,
+  // privilages.getPrivilages,
+  warehouseController.removeById
+]);
+
+
 
 
 module.exports = router;

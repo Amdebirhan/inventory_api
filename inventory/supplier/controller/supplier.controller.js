@@ -1,13 +1,14 @@
 const supplierModel = require("../models/supplier.models"); 
 
-exports.insert = (req, res) => {
+module.exports.insert = (req, res) => {
     supplierModel.createSupplier(req.body)
         .then((result) => {
             res.status(201).send({id: result._id});
         });
  };
 
- exports.getById = (req, res) => {
+
+module.exports.getById = (req, res) => {
     supplierModel.findById(req.params.supplierId).then((result) => {
         res.status(200).send(result);
     });
@@ -19,7 +20,7 @@ exports.insert = (req, res) => {
     });
  };
 
- exports.list = (req, res) => {
+module.exports.list = (req, res) => {
     let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
     let page = 0;
     if (req.query) {
@@ -33,7 +34,7 @@ exports.insert = (req, res) => {
     })
  };
 
- exports.removeById = (req, res) => {
+module.exports.removeById = (req, res) => {
     supplierModel.removeById(req.params.supplierId)
         .then((result)=>{
             res.status(204).send({});
