@@ -5,9 +5,15 @@ const User = require("../../inventory/users/models/users.model");
 const { generateJwt } = require("../../inventory/helpers/generateJwt");
 const roles = require('../../inventory/privilages/helper/roles')
 const rolesAndPrivilages = require('../middlewares/SignupRoleAndPrivilages')
+<<<<<<< HEAD
 const organizationalProfile = require("../../inventory/organizational_profile/middlewares/organizationalProfile.middleware");
 const crypto=require("crypto");
 const clientURL= require("../../inventory/common/config/env.config").clientURL;
+=======
+const organizationalProfile = require("../../inventory/organizational_profile/models/organizationalProfile.models")
+const crypto =require("crypto")
+const clientURL = require("../../inventory/common/config/env.config").clientURL;
+>>>>>>> 330c18fb0829e70d2c444d004c2e0b8762d26ef6
 //Validate user schema
 const userSchema = Joi.object().keys({
   email: Joi.string().email({ minDomainSegments: 2 }),
@@ -99,6 +105,7 @@ exports.Signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  console.log(req.body)
   try {
 
     const { email, password } = req.body;
@@ -231,6 +238,7 @@ exports.activate = async (req, res) => {
 }
 
 exports.forgetPassword = async (req, res) => {
+
   try {
     const { email } = req.body;
     if (!email) {
@@ -254,7 +262,7 @@ exports.forgetPassword = async (req, res) => {
     let resetToken = crypto.randomBytes(32).toString("hex");
     const hash = await User.hashPassword(resetToken);
 
-    const link = `${clientURL}?token=${resetToken}&id=${user._id}`;
+    const link = `${clientURL}?token=${resetToken}&id=${user._id}&orgId=${user.organizationalId}`;
     let Response = await sendEmail(user.email,
       "Password Reset Request",
       { name: user.firstName, link: link, },
@@ -288,9 +296,13 @@ exports.forgetPassword = async (req, res) => {
 }
 
 exports.resetPassword = async (req, res) => {
+  console.log(req.body)
   try {
-    const { token, newPassword, confirmPassword } = req.body
-    if (!token || !newPassword || !confirmPassword) {
+    const  token=req.params.token;
+    const userId=req.params.id;
+    const orgId=req.params.orgId;
+    const {newPassword, confirmPassword } = req.body
+    if (!token || !newPassword || !confirmPassword|| !userId) {
       return res.status(403).json({
         error: true,
         message: "pleace provide all mandatory fields"
@@ -299,6 +311,8 @@ exports.resetPassword = async (req, res) => {
 
     const hash = await User.hashPassword(req.body.token);
     const user = await User.findOne({
+      _id:userId,
+      organizationalId:orgId,
       resetPasswordToken: hash,
       resetPasswordExpires: { $gt: Date.now() },
     })
