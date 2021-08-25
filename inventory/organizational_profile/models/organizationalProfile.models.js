@@ -17,7 +17,6 @@ const OrganizationalProfileSchema = new Schema({
     contact_email: { type: String, unique: true },
     contact_phone_no: { type: String, unique: true },
     delete_precondition: { type: Date, default: null },
-    delete_precondition: { type: Date, default: null },
     active: { type: Boolean, default: true },
 },
 

@@ -99,9 +99,7 @@ exports.Signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  console.log(req.body)
   try {
-
     const { email, password } = req.body;
 
     if (!email) {
@@ -130,7 +128,6 @@ exports.login = async (req, res) => {
           message: "account not found"
         })
       }
-
       //through error if the account is not activated with the code sent by the email
       if (!user.active) {
         res.status(400).json({
@@ -142,14 +139,13 @@ exports.login = async (req, res) => {
       const isValid = await User.comparePasswords(password, user.password);
       if (!isValid) {
         return res.status(400).json({
-          error: true,
+          error: "Incorrect Password",
           message: "Incorrect password"
         })
       }
 
 
       const { error, token } = await generateJwt(user.email, user._id,user.organizationalId);
-      console.log(error)
       if (error) {
         return res.status(500).json({
           error: true,
@@ -161,8 +157,8 @@ exports.login = async (req, res) => {
 
       //successfully login
       return res.send({
+        accessToken:user.accessToken,
         success: true,
-        message: user.accessToken,
       })
 
 

@@ -14,6 +14,7 @@ exports.getById = (req, res) => {
 
 
  exports.patchById = (req, res) => {
+     console.log(req.body)
     organizationalProfileModel.patchUser(req.params.organizationId, req.body).then((result) => {
             res.status(204).send({});
     });
