@@ -5,15 +5,9 @@ const User = require("../../inventory/users/models/users.model");
 const { generateJwt } = require("../../inventory/helpers/generateJwt");
 const roles = require('../../inventory/privilages/helper/roles')
 const rolesAndPrivilages = require('../middlewares/SignupRoleAndPrivilages')
-<<<<<<< HEAD
-const organizationalProfile = require("../../inventory/organizational_profile/middlewares/organizationalProfile.middleware");
-const crypto=require("crypto");
-const clientURL= require("../../inventory/common/config/env.config").clientURL;
-=======
 const organizationalProfile = require("../../inventory/organizational_profile/models/organizationalProfile.models")
 const crypto =require("crypto")
 const clientURL = require("../../inventory/common/config/env.config").clientURL;
->>>>>>> 330c18fb0829e70d2c444d004c2e0b8762d26ef6
 //Validate user schema
 const userSchema = Joi.object().keys({
   email: Joi.string().email({ minDomainSegments: 2 }),
