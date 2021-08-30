@@ -42,7 +42,20 @@ module.exports.findById=(invoiceId)=>{
     }
 });
 }
-
+exports.list = (perPage, page) => {
+  return new Promise((resolve, reject) => {
+    Invoice.find('organizational_ID:organizationId')
+          .limit(perPage)
+          .skip(perPage * page)
+          .exec(function (err, users) {
+              if (err) {
+                  reject(err);
+              } else {
+                  resolve(users);
+              }
+          })
+  });
+};
 module.exports.changeStatus=(invoiceId,statusId)=>{
   Invoice.updateMany({ _id: invoiceId},{$set: {
             "status_ID": statusId,

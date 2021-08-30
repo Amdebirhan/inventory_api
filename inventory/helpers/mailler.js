@@ -2,9 +2,9 @@ const nodemailer = require("nodemailer");
 const handlebars = require("handlebars");
 const env = require('../common/config/env.config');
 const fs = require('fs');
-const path = require("path");
+const path = require('path')
 
-async function sendEmail(email, subject, payload, template,filename,path,contentType) {
+async function sendEmail(email, subject, payload, template) {
   try {
 
     const smtpEndpoint = env.smtpEndpoint;
@@ -17,11 +17,6 @@ async function sendEmail(email, subject, payload, template,filename,path,content
 
     var subject = subject;
 
-    var attachment =[{
-      filename: filename,
-      path: path,
-      contentType: contentType
-    }]
 
     const smtpUsername = env.smtpUsername;
 
@@ -49,8 +44,7 @@ async function sendEmail(email, subject, payload, template,filename,path,content
       from: senderAddress,
       to: toAddress,
       subject: subject,
-      html: compiledTemplate(payload),
-      attachments: attachment,
+      html: compiledTemplate(payload)
     };
 
 

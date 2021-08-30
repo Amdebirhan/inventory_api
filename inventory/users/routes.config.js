@@ -6,7 +6,7 @@ const express = require('express');
 const url = require("url");
 router = express.Router();
 
-router.route('/').post(function (req, res) {
+router.route('/insert-user').post(function (req, res) {
   [
     cleanBody,
     validateToken,
@@ -29,11 +29,15 @@ router.get(('/list-users'), [
   userController.list
 ]);
 
-router.patch('/assignPrivilages',
+router.patch('/update-users/:userId',
+  userController.patchById,
+);
+
+router.patch('/assign-privilages',
   userController.assignPrivilage,
 );
 
-router.delete('/users/:userId', [
+router.delete('/remove-users/:userId', [
   userController.removeById
 ]);
 

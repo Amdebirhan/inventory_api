@@ -23,7 +23,7 @@ router.get('/get-warehouse/:warehouseId',
   ]
 );
 
-router.get(('/get-warehouse/'), [
+router.get(('/get-warehouse'), [
   cleanBody,
   // validateToken,
   // privilages.getPrivilages,

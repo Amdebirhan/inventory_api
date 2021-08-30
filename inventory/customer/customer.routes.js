@@ -23,7 +23,7 @@ router.get(('/get-customer/:customerId'), [
     customerController.getById
   ]);
 
-router.get(('/get-customers/'), [
+router.get(('/get-customers'), [
   cleanBody,
   // validateToken,
   // privilages.getPrivilages,

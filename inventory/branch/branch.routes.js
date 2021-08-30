@@ -22,7 +22,7 @@ router.get(('/get-branch/:branchId'), [
   branchController.getById
 ]);
 
-router.get(('/get-branchs/'), [
+router.get(('/get-branchs'), [
   cleanBody,
   // validateToken,
   // privilages.getPrivilages,

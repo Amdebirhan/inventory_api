@@ -51,13 +51,13 @@ module.exports.createPurchaseorder = (userData) => {
   return purchaseorder.save();
 };
 
-exports.patchPO = (id, userData) => {
+module.exports.patchPO = (id, userData) => {
   return Purchaseorder.findOneAndUpdate({
       _id: id
   }, userData);
 };
 
-exports.list = (perPage, page) => {
+module.exports.list = (perPage, page) => {
   return new Promise((resolve, reject) => {
     Purchaseorder.find()
           .limit(perPage)
@@ -72,7 +72,7 @@ exports.list = (perPage, page) => {
   });
 };
 
-exports.removeById = (userId) => {
+module.exports.removeById = (userId) => {
   return new Promise((resolve, reject) => {
     Purchaseorder.deleteMany({_id: userId}, (err) => {
           if (err) {
@@ -84,7 +84,7 @@ exports.removeById = (userId) => {
   });
 };
 
-exports.findById = (id) => {
+module.exports.findById = (id) => {
   return Purchaseorder.findById(id).then((result) => {
       result = result.toJSON();
       delete result.__v;
