@@ -162,7 +162,7 @@ exports.login = async (req, res) => {
       //successfully login
       return res.send({
         success: true,
-        message: user.accessToken,
+        token: user.accessToken,
       })
 
 

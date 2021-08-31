@@ -1,9 +1,12 @@
 const customerModel = require("../models/customer.models"); 
 
 module.exports.insert = (req, res) => {
-    customerModel.createCustomer(req.body)
+    console.log(req.body.data[0])
+    customerModel.createCustomer(req.body.data[0])
         .then((result) => {
-            res.status(201).send({id: result._id});
+            const values = [];
+            values.push(result);
+            res.status(201).send({values});
         });
  };
 

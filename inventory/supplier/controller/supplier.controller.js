@@ -3,7 +3,9 @@ const supplierModel = require("../models/supplier.models");
 module.exports.insert = (req, res) => {
     supplierModel.createSupplier(req.body)
         .then((result) => {
-            res.status(201).send({id: result._id});
+            const values = [];
+            values.push(result);
+            res.status(201).send({values});
         });
  };
 
@@ -16,7 +18,9 @@ module.exports.getById = (req, res) => {
 
  exports.patchById = (req, res) => {
     supplierModel.patchCustomer(req.params.supplierId, req.body).then((result) => {
-            res.status(204).send({});
+        const values = [];
+        values.push(result);
+        res.status(201).send({values});
     });
  };
 
@@ -37,6 +41,8 @@ module.exports.list = (req, res) => {
 module.exports.removeById = (req, res) => {
     supplierModel.removeById(req.params.supplierId)
         .then((result)=>{
-            res.status(204).send({});
+            const values = [];
+            values.push(result);
+            res.status(204).send({values});
         });
  };
