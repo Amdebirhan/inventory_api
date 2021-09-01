@@ -16,6 +16,7 @@ const userSchema = Joi.object().keys({
 }).unknown();
 
 exports.Signup = async (req, res) => {
+  console.log(req.body)
   try {
      req.body.roleName = roles.ADMIN;
     req.body.roleId =await rolesAndPrivilages.assignRole(req.body,res);
@@ -43,7 +44,7 @@ exports.Signup = async (req, res) => {
         if(emailToken!==null){
           return res.json({
             error: true,
-            message: "We send a verification code through your Email please check your email",
+            message: "We already send a verification code through your Email please check your email",
           });
         }else{
           User.findOneAndRemove({_id: user._id}, (err) => {
@@ -88,7 +89,9 @@ exports.Signup = async (req, res) => {
     
     return res.status(200).json({
       success: true,
-      message: "Registration Success",
+      user:result.value.email,
+      message: "Registration Success We send a verification code through your Email",
+
     });
   } catch (error) {
     return res.status(500).json({
@@ -174,6 +177,7 @@ exports.login = async (req, res) => {
 }
 
 exports.activate = async (req, res) => {
+  console.log(req.body)
   try {
     const { email, code } = req.body;
     if (!email || !code) {

@@ -7,12 +7,15 @@ const privilages = require("../../authorization/middlewares/verifyPrivilageRoute
 const express = require('express');
 router = express.Router();
 
-router.post("/insert-customer", [
-  cleanBody,
-  validateToken,
-  privilages.getPrivilages,
+router.post("/insert-customer",function (req, res) { [
+  
+  //validateToken,
+  //privilages.getPrivilages,
+  console.log('dsfsdf'),
   customerController.insert
-]);
+
+]});
+
 
 
 

@@ -17,9 +17,6 @@ const customerSchema = new Schema({
     city: { type: String },
     street1: { type: String },
     street2: { type: String },
-
-
-
 },
 
     {

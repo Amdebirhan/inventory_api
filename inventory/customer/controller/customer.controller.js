@@ -1,6 +1,7 @@
 const customerModel = require("../models/customer.models"); 
 
 exports.insert = (req, res) => {
+    console.log(req.body)
     customerModel.createUser(req.body)
         .then((result) => {
             res.status(201).send({id: result._id});

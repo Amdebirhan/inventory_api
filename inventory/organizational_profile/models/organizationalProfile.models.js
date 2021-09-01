@@ -30,8 +30,8 @@ const OrganizationalProfileSchema = new Schema({
 const OrganizationalProfile = mongoose.model("OrganizationalProfile", OrganizationalProfileSchema);
 module.exports = OrganizationalProfile;
 
-exports.createOrganizationalProfile = (organizationData) => {
-  const organizationalProfile = new User(organizationData);
+module.exports.createOrganizationalProfile = (organizationData) => {
+  const organizationalProfile = new OrganizationalProfile(organizationData);
   return organizationalProfile.save();
 };
 
