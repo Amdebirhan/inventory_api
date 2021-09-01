@@ -9,42 +9,40 @@ router = express.Router();
 
 router.post("/insert-item", [
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
+  // validateToken,
+  // privilages.getPrivilages,
   itemController.insert
 ]);
 
 
 
-router.get('/get-item/:itemId', function (req, res) {
-  [
+router.get(('/get-item/:itemId'), [
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     itemController.getById
-  ]
-})
+  ]);
 
 router.get(('/get-items/'), [
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
+  // validateToken,
+  // privilages.getPrivilages,
   itemController.list
 ]);
 
 router.patch(('/patch-item/:itemId'), [
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
+  // validateToken,
+  // privilages.getPrivilages,
   itemController.patchById
 ]);
 
-router.delete('/remove-item/:itemId', function (req, res) {[
+router.delete(('/remove-item/:itemId'), [
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
-  itemController.delete
-]});
+  // validateToken,
+  // privilages.getPrivilages,
+  itemController.removeById
+]);
 
 
 module.exports = router;

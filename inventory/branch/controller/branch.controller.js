@@ -16,10 +16,11 @@ exports.insert = (req, res) => {
  };
 
  exports.patchById = (req, res) => {
-    branchModel.patchUser(req.params.userId, req.body).then((result) => {
+    branchModel.patchUser(req.params.branchId, req.body).then((result) => {
             res.status(204).send({});
     });
  };
+ 
 
  exports.list = (req, res) => {
     let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;

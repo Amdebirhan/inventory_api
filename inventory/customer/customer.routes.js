@@ -7,11 +7,10 @@ const privilages = require("../../authorization/middlewares/verifyPrivilageRoute
 const express = require('express');
 router = express.Router();
 
-router.post("/insert-customer",function (req, res) { [
-  
-  //validateToken,
-  //privilages.getPrivilages,
-  console.log('dsfsdf'),
+router.post("/insert-customer", [
+  cleanBody,
+  // validateToken,
+  // privilages.getPrivilages,
   customerController.insert
 
 ]});
@@ -19,35 +18,33 @@ router.post("/insert-customer",function (req, res) { [
 
 
 
-router.get('/get-customer/:customerId', function (req, res) {
-  [
+router.get(('/get-customer/:customerId'), [
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     customerController.getById
-  ]
-})
+  ]);
 
-router.get(('/get-customers/'), [
+router.get(('/get-customers'), [
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
+  // validateToken,
+  // privilages.getPrivilages,
   customerController.list
 ]);
 
 router.patch(('/patch-customer/:customerId'), [
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
+  // validateToken,
+  // privilages.getPrivilages,
   customerController.patchById
 ]);
 
-router.delete('/remove-customer/:userId', function (req, res) {[
+router.delete(('/remove-customer/:customerId'),[
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
-  customerController.delete
-]});
+  // validateToken,
+  // privilages.getPrivilages,
+  customerController.removeById
+]);
 
 
 module.exports = router;

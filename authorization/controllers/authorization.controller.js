@@ -162,6 +162,7 @@ exports.login = async (req, res) => {
       return res.send({
         accessToken:user.accessToken,
         success: true,
+        token: user.accessToken,
       })
 
 
@@ -186,7 +187,7 @@ exports.activate = async (req, res) => {
         message: "please make a valid request"
       });
     }
-
+    
     const user = await User.findOne({
       email: email,
       emailToken: code,
@@ -210,8 +211,12 @@ exports.activate = async (req, res) => {
       user.active = true;
         
       await user.save();
-      req.body.contact_email = user.email;
-      organizationalProfile.createOrganizationalProfile(req.body.contact_email);
+
+      orgProfile={
+        contact_email :user.email,
+      }
+      organizationalProfile.createOrganizationalProfile(orgProfile);
+
       return res.status(200).json({
         success: true,
         message: "account activated",

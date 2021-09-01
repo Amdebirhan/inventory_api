@@ -14,7 +14,11 @@ const billSchema = new Schema({
     supplierId:{ type: Schema.Types.ObjectId, ref: supplierSchema },
     warehouseId:{ type: Schema.Types.ObjectId, ref: warehouseSchema },
     branchId:{ type: Schema.Types.ObjectId, ref: branchSchema },
-    statusId: {type:String},  
+    statusId:{
+      type: String,
+      enum: ['Draft', 'Overdue','Sent', 'Partially Paid','Paid','Canceled'],
+      default: 'Draft'
+             },
     bill_date:{ type: Date},
   },
 

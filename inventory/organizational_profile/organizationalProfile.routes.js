@@ -7,26 +7,24 @@ const privilages = require("../../authorization/middlewares/verifyPrivilageRoute
 const express = require('express');
 router = express.Router();
 
-router.get('/get-organization/:organizationId').post(function (req, res) {
-  [
+router.get('/get-organization/:organizationId',[
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     orgProfileController.getById
-  ]
-})
+  ]);
 
 router.patch(('/patch-organization'), [
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     orgProfileController.patchById
   ]);
 
   router.patch(('/remove-organization'), [
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     orgProfileController.removeById
   ]);
 

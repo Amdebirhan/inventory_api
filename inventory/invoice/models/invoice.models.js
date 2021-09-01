@@ -11,7 +11,11 @@ const invoiceSchema = new Schema({
     customer_ID:{ type: Schema.Types.ObjectId, ref: customerSchema },
     sales_person_ID:{ type: Schema.Types.ObjectId, ref: userSchema },
     sale_order_ID:{ type: Schema.Types.ObjectId, ref: saleOrderSchema },
-    status: { type:String}, 
+    status: {
+      type: String,
+      enum: ['Draft', 'Sent', 'Partially Paid','Paid','Overdue','Canceled'],
+      default: 'Draft'
+             },
     invoice_date:{ type: Date}, 
   },
 
@@ -38,7 +42,20 @@ module.exports.findById=(invoiceId)=>{
     }
 });
 }
-
+exports.list = (perPage, page) => {
+  return new Promise((resolve, reject) => {
+    Invoice.find('organizational_ID:organizationId')
+          .limit(perPage)
+          .skip(perPage * page)
+          .exec(function (err, users) {
+              if (err) {
+                  reject(err);
+              } else {
+                  resolve(users);
+              }
+          })
+  });
+};
 module.exports.changeStatus=(invoiceId,statusId)=>{
   Invoice.updateMany({ _id: invoiceId},{$set: {
             "status_ID": statusId,

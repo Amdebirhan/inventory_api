@@ -7,41 +7,40 @@ const privilages = require("../../authorization/middlewares/verifyPrivilageRoute
 const express = require('express');
 router = express.Router();
 
-router.Post(('/insert-supplier'), [
+router.post(('/insert-supplier'), [
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
+  // validateToken,
+  // privilages.getPrivilages,
   supplierController.insert
 ]);
 
-router.get('/get-supplier/:supplierId').post(function (req, res) {
+router.get(('/get-supplier/:supplierId'),
   [
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     supplierController.getById
-  ]
-})
+  ])
 
-router.get(('/get-supplier/'), [
+router.get(('/get-supplier'), [
   cleanBody,
-  validateToken,
-  privilages.getPrivilages,
+  // validateToken,
+  // privilages.getPrivilages,
   supplierController.list
 ]);
 
 router.patch(('/patch-supplier/:supplierId'), [
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     supplierController.patchById
   ]);
 
   router.delete(('/remove-supplier/:supplierId'), [
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
-    supplierController.delete
+    // validateToken,
+    // privilages.getPrivilages,
+    supplierController.removeById
   ]);
 
 module.exports = router;

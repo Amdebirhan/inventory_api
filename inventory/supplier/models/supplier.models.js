@@ -12,7 +12,7 @@ const supplierSchema = new Schema({
   email: { type: String, unique: true },
   workPhone_no: { type: String, unique: true },
   mobile_no: { type: String, unique: true },
-  country: { type: String, required: true },
+  country: { type: String},
   state: { type: String, },
   city: { type: String, },
 },
@@ -29,27 +29,30 @@ const Supplier = mongoose.model("supplier", supplierSchema);
 module.exports = Supplier;
 
 
-exports.createSupplier = (supplierData) => {
+module.exports.createSupplier = (supplierData) => {
   const supplier = new Supplier(supplierData);
   return supplier.save();
 };
 
-exports.findById = (id) => {
-  return Supplier.findById(id).then((result) => {
-    result = result.toJSON();
-    delete result._id;
-    delete result.__v;
-    return result;
+module.exports.findById = (itemId) => {
+  return Supplier.findOne({ _id: itemId }).then((result) => {
+    if (result === null) {
+      return result;
+    } else {
+      result = result.toJSON();
+      delete result.__v;
+      return result;
+    }
   });
-};
+}
 
-exports.patchCustomer = (id, supplierData) => {
+module.exports.patchCustomer = (id, supplierData) => {
   return Supplier.findOneAndUpdate({
     _id: id
-  }, customerData);
+  }, supplierData);
 };
 
-exports.list = (perPage, page) => {
+module.exports.list = (perPage, page) => {
   return new Promise((resolve, reject) => {
     Supplier.find()
       .limit(perPage)
@@ -64,7 +67,7 @@ exports.list = (perPage, page) => {
   });
 };
 
-exports.removeById = (supplierId) => {
+module.exports.removeById = (supplierId) => {
   return new Promise((resolve, reject) => {
     Supplier.deleteMany({ _id: supplierId }, (err) => {
       if (err) {

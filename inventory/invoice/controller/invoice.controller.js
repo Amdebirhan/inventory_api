@@ -9,16 +9,23 @@ const organizationalModel = require("../../organizational_profile/models/organiz
 const customerModel = require("../../customer/models/customer.models")
 
 
-exports.getById = (req, res) => {
-    invoiceModel.findById(req.params.userId).then((result) => {
+//list all invoices
+exports.list = (req, res) => {
+    let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
+    let page = 0;
+    let organizationId = req.decoded.organizationId;
+    if (req.query) {
+        if (req.query.page) {
+            req.query.page = parseInt(req.query.page);
+            page = Number.isInteger(req.query.page) ? req.query.page : 0;
+        }
+    }
+    invoiceModel.list(limit, page,organizationId).then((result) => {
         res.status(200).send(result);
-    });
-};
+    })
+ };  
 
-exports.generatePdf = async (req, res, next) => {
-    const html = fs.readFileSync(path.join(__dirname, '../../helpers/templates/invoice-single.handlebars'), 'utf-8');
-    const filename = Math.random() + '_doc' + '.pdf';
-    let array = [];
+exports.singleInvoice = async (req, res, next) => {
 
     //first get the invoice data from invoice model
     const invoice = invoiceModel.findById(req.params.userId);
@@ -46,14 +53,13 @@ exports.generatePdf = async (req, res, next) => {
         item++;
     });
 
-
     let subtotal = 0;
     array.forEach(i => {
         subtotal += i.total
     });
     const tax = (subtotal * saleOrder.tax) / 100;
     const grandtotal = subtotal + tax + saleOrder.shipment_charge;
-    const obj = {
+    const result = {
         title:"invoice",
         company_logo:company.logo, 
         company_name:company.organization_Name,
@@ -70,29 +76,8 @@ exports.generatePdf = async (req, res, next) => {
         tax: tax,
         grandtotal: grandtotal
     }
-    const document = {
-        html: html,
-        data: {
-            products: obj
-        },
-        path: './' + filename,
-        type: "stream",
-    }
-    pdf.create(document, options).toStream((err,res)=>{
-        if (err) {
 
-            console.error(err);
-            res.status(500);
-            res.end(JSON.stringify(err));
-      
-            return;
-          }
-      
-          res.setHeader('Content-Type', 'application/pdf');
-          res.setHeader('Content-Disposition', 'attachment; filename=test-file.pdf;');
-      
-          stream.pipe(res);
-    })
+      res.status(200).send(result);
 }
 
 exports.changeStatus = (req, res) => {
@@ -101,26 +86,96 @@ exports.changeStatus = (req, res) => {
     });
 };
 
-//send pdf using email
-fs.readFile("E:/syed/nodejs/tasks/mail/mailwithdb/sheet.pdf",function(err,data){
-    var mailOptions={
-    from:' <mail@gmail.com>',
-    to:'mail@gmail.com',
-    subject:'Sample mail',
-    text:'Hello !!!!!!!!!!!!!',
-    attachments:[
-    {
-        'filename':'sheet.pdf',
-         'content': data,
-         'contentType':'application/pdf'
-    }]
-    }
-    transporter.sendMail(mailOptions,function(err,res){
-    if(err){
-        console.log('Error');
-    }
-    else{
-    console.log('Email Sent');
-    }
-    })
-    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //send pdf using email
+// fs.readFile("E:/syed/nodejs/tasks/mail/mailwithdb/sheet.pdf",function(err,data){
+//     var mailOptions={
+//     from:' <mail@gmail.com>',
+//     to:'mail@gmail.com',
+//     subject:'Sample mail',
+//     text:'Hello !!!!!!!!!!!!!',
+//     attachments:[
+//     {
+//         'filename':'sheet.pdf',
+//          'content': data,
+//          'contentType':'application/pdf'
+//     }]
+//     }
+//     transporter.sendMail(mailOptions,function(err,res){
+//     if(err){
+//         console.log('Error');
+//     }
+//     else{
+//     console.log('Email Sent');
+//     }
+//     })
+//     });
+
+
+    
+// const generatePdf = async (req, res, next) => {
+//     const html = fs.readFileSync(path.join(__dirname, '../views/template.html'), 'utf-8');
+//     const filename = Math.random() + '_doc' + '.pdf';
+//     let array = [];
+
+//     data.forEach(d => {
+//         const prod = {
+//             name: d.name,
+//             description: d.description,
+//             unit: d.unit,
+//             quantity: d.quantity,
+//             price: d.price,
+//             total: d.quantity * d.price,
+//             imgurl: d.imgurl
+//         }
+//         array.push(prod);
+//     });
+
+//     let subtotal = 0;
+//     array.forEach(i => {
+//         subtotal += i.total
+//     });
+//     const tax = (subtotal * 20) / 100;
+//     const grandtotal = subtotal - tax;
+//     const obj = {
+//         prodlist: array,
+//         subtotal: subtotal,
+//         tax: tax,
+//         gtotal: grandtotal
+//     }
+//     const document = {
+//         html: html,
+//         data: {
+//             products: obj
+//         },
+//         path: './docs/' + filename
+//     }
+//     pdf.create(document, options)
+//         .then(res => {
+//             console.log(res);
+//         }).catch(error => {
+//             console.log(error);
+//         });
+//         const filepath = 'http://localhost:3000/docs/' + filename;
+
+//         res.render('download', {
+//             path: filepath
+//         });
+// }
+

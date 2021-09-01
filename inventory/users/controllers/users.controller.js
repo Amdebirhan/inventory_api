@@ -52,7 +52,11 @@ exports.getById = (req, res) => {
     res.status(200).send(result);
   });
 };
-
+exports.patchById = (req, res) => {
+  User.patchUser(req.params.userId, req.body).then((result) => {
+          res.status(204).send({});
+  });
+};
 
 exports.assignPrivilage = async (req, res) => {
   //console.log(req.body.userId);

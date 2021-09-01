@@ -5,46 +5,44 @@ const privilages = require("../../authorization/middlewares/verifyPrivilageRoute
 const express = require('express');
 router = express.Router();
 
-router.route('/insert-PO').post(function (req, res) {
-    [
+router.post(('/insert-PO'), [
         cleanBody,
-        validateToken,
-        privilages.getPrivilages,
+        // validateToken,
+        // privilages.getPrivilages,
         POController.insertPO
-    ]
-})
+    ]);
 
 router.get(('/get-PO/:POId'), [
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     POController.getById
 ]);
 
 router.get(('/list-PO'), [
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     POController.list
 ]);
 router.get(('/convert-to-bill/:POId'), [
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     POController.convertPOToBill
 ]);
 
-router.patch('/update-PO/:POId',
+router.patch(('/update-PO/:POId'),
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     POController.updatePO,
 );
 
-router.delete('/remove-PO/:POId', [
+router.delete(('/remove-PO/:POId'), [
     cleanBody,
-    validateToken,
-    privilages.getPrivilages,
+    // validateToken,
+    // privilages.getPrivilages,
     POController.removeById
 ]);
 

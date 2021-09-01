@@ -22,7 +22,6 @@ const itemSchema = new Schema({
     expiryDate: { type: String },
     createdBy: { type: String },
     updatedBy: { type: String },
-    createdBy: { type: String },
 
 },
 
@@ -33,22 +32,22 @@ const itemSchema = new Schema({
         },
     }
 );
-const item = mongoose.model("item", itemSchema);
-module.exports = item;
+const Item = mongoose.model("item", itemSchema);
+module.exports = Item;
 
-exports.createItem = (itemData) => {
-  const item = new item(itemData);
+module.exports.createItem = (itemData) => {
+  const item = new Item(itemData);
   return item.save();
 };
 
-exports.patchUser = (id, itemData) => {
-  return item.findOneAndUpdate({
+module.exports.patchUser = (id, itemData) => {
+  return Item.findOneAndUpdate({
       _id: id
-  }, userData);
+  }, itemData);
 };
 
 module.exports.findById=(itemId)=>{
-    return item.findOne({_id:itemId}).then((result) => {
+    return Item.findOne({_id:itemId}).then((result) => {
       if(result === null){
         return result;
       }else{
@@ -59,9 +58,9 @@ module.exports.findById=(itemId)=>{
   });
   }
 
-  exports.list = (perPage, page) => {
+module.exports.list = (perPage, page) => {
     return new Promise((resolve, reject) => {
-      item.find()
+      Item.find()
             .limit(perPage)
             .skip(perPage * page)
             .exec(function (err, users) {
@@ -75,9 +74,9 @@ module.exports.findById=(itemId)=>{
 };
 
 
-exports.removeById = (userId) => {
+module.exports.removeById = (userId) => {
   return new Promise((resolve, reject) => {
-    item.deleteMany({_id: userId}, (err) => {
+    Item.deleteMany({_id: userId}, (err) => {
           if (err) {
               reject(err);
           } else {
