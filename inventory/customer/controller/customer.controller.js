@@ -1,7 +1,7 @@
 const customerModel = require("../models/customer.models"); 
 
 module.exports.insert = (req, res) => {
-    console.log(req.body.data[0])
+    console.log(req.body.data[0].id)
     customerModel.createCustomer(req.body.data[0])
         .then((result) => {
             const values = [];
@@ -17,8 +17,12 @@ module.exports.insert = (req, res) => {
  };
 
  module.exports.patchById = (req, res) => {
-    customerModel.patchCustomer(req.params.customerId, req.body).then((result) => {
-            res.status(204).send({});
+    console.log(req.body.data)
+    customerModel.patchCustomer(req.params.customerId, req.body.data).then((result) => {
+        console.log(result)
+        const values = [];
+        values.push(result);
+        res.status(201).send({values});
     });
  };
 

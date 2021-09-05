@@ -12,7 +12,9 @@ router.post("/insert-customer", [
   // validateToken,
   // privilages.getPrivilages,
   customerController.insert
-]);
+
+])
+
 
 
 

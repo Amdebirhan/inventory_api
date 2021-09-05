@@ -14,14 +14,14 @@ router.get('/get-organization/:organizationId',[
     orgProfileController.getById
   ]);
 
-router.patch(('/patch-organization/:organizationId'), [
+router.patch(('/patch-organization'), [
     cleanBody,
     // validateToken,
     // privilages.getPrivilages,
     orgProfileController.patchById
   ]);
 
-  router.patch(('/remove-organization/:organizationId'), [
+  router.patch(('/remove-organization'), [
     cleanBody,
     // validateToken,
     // privilages.getPrivilages,

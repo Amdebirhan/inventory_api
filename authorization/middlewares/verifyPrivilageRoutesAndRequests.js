@@ -40,10 +40,6 @@ exports.getPrivilages = async (req, res,next) => {
     if (allow) {
         next();
     }
-    
-   
-    
-    
     //handle your reject and catch here
 
 };

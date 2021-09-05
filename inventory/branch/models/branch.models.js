@@ -13,10 +13,8 @@ const branchSchema = new Schema({
     email: { type: String, unique: true },
     phone_no: { type: String, unique: true },
     country: { type: String },
-    region: { type: String },
     city: { type: String },
     street: { type: String },
-    zip_code: { type: String, unique: true }
 },
 
     {
