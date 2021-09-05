@@ -10,7 +10,7 @@ const customerModel = require("../../customer/models/customer.models")
 
 
 //list all invoices
-exports.list = (req, res) => {
+module.exports.list = (req, res) => {
     let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
     let page = 0;
     let organizationId = req.decoded.organizationId;
@@ -25,7 +25,23 @@ exports.list = (req, res) => {
     })
  };  
 
-exports.singleInvoice = async (req, res, next) => {
+ module.exports.customersInvoice = (req, res) => {
+     let customerId= req.params.customerId;
+    let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
+    let page = 0;
+    let organizationId = req.decoded.organizationId;
+    if (req.query) {
+        if (req.query.page) {
+            req.query.page = parseInt(req.query.page);
+            page = Number.isInteger(req.query.page) ? req.query.page : 0;
+        }
+    }
+    invoiceModel.list(limit, page,organizationId,customerId).then((result) => {
+        res.status(200).send(result);
+    })
+ };  
+
+ module.exports.singleInvoice = async (req, res, next) => {
 
     //first get the invoice data from invoice model
     const invoice = invoiceModel.findById(req.params.userId);
@@ -80,7 +96,7 @@ exports.singleInvoice = async (req, res, next) => {
       res.status(200).send(result);
 }
 
-exports.changeStatus = (req, res) => {
+module.exports.changeStatus = (req, res) => {
     saleorderModel.findById(req.params.invoiceId,req.params.statusId).then((result) => {
         res.status(200).send(result);
     });
