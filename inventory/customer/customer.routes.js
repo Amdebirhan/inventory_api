@@ -13,7 +13,7 @@ router.post("/insert-customer", [
   // privilages.getPrivilages,
   customerController.insert
 
-]});
+])
 
 
 
