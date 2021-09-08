@@ -69,6 +69,7 @@ module.exports.list = (perPage, page) => {
 };
 
 module.exports.removeById = (customerId) => {
+  console.log((customerId))
   return new Promise((resolve, reject) => {
     customer.deleteMany({_id: customerId}, (err) => {
           if (err) {
