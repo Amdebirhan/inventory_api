@@ -7,13 +7,14 @@ const saleOrderModel = require("../../sale_order/models/saleOrder.models");
 const itemModel = require("../../item/models/item.models");
 const organizationalModel = require("../../organizational_profile/models/organizationalProfile.models");
 const customerModel = require("../../customer/models/customer.models")
-
+const token= require("../../../authorization/middlewares/decodeToken");
 
 //list all invoices
-module.exports.list = (req, res) => {
+module.exports.list =async(req, res) => {
+    const decoded = await token.decodeToken(req.headers.authorization);
     let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
     let page = 0;
-    let organizationId = req.decoded.organizationId;
+    let organizationId =decoded.organizationId;
     if (req.query) {
         if (req.query.page) {
             req.query.page = parseInt(req.query.page);
