@@ -159,7 +159,7 @@ module.exports.updatePrivilage = (id, privilages) => {
 
 module.exports.patchUser = (id, userData) => {
   return User.findOneAndUpdate({
-    _id: id, path
+    _id: id,
   }, userData);
 };
 

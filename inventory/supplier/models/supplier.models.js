@@ -15,7 +15,6 @@ const supplierSchema = new Schema({
   country: { type: String},
   state: { type: String, },
   city: { type: String, },
-  street: { type: String, }
 },
 
   {

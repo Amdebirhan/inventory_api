@@ -3,7 +3,7 @@ const router = express.Router();
 const { exec } = require('child_process');
 const nodemailer = require('nodemailer');
 const InvoiceController = require('./controller/invoice.controller');
-
+const cleanBody = require("../common/middlewares/cleanbody");
 
 //list all invoices
 
@@ -21,6 +21,12 @@ router.patch('/change-status/:id', function(req, res) {
   InvoiceController.changeStatus
 });
 
+router.get(('/get-customers-invoice/:customerId'), [
+  cleanBody,
+  // validateToken,
+  // privilages.getPrivilages,
+  InvoiceController.customersInvoice
+]);
 module.exports = router;
 
 // //convert the invoice to pdf and send it to client by email

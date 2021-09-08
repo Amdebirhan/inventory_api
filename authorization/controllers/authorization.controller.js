@@ -3,6 +3,7 @@ const { v4: uuid } = require("uuid");
 const { sendEmail } = require("../../inventory/helpers/mailler");
 const User = require("../../inventory/users/models/users.model");
 const { generateJwt } = require("../../inventory/helpers/generateJwt");
+const token= require("../middlewares/decodeToken");
 const roles = require('../../inventory/privilages/helper/roles')
 const rolesAndPrivilages = require('../middlewares/SignupRoleAndPrivilages')
 const organizationalProfile = require("../../inventory/organizational_profile/models/organizationalProfile.models")
@@ -16,11 +17,20 @@ const userSchema = Joi.object().keys({
 }).unknown();
 
 exports.Signup = async (req, res) => {
+  console.log(req.body)
   try {
      req.body.roleName = roles.ADMIN;
     req.body.roleId =await rolesAndPrivilages.assignRole(req.body,res);
     delete req.body.roleName;
     req.body.privilages =await rolesAndPrivilages.assignPrivilages(req.body.roleId);
+    orgProfile={
+      contact_email :req.body.email,
+    }
+    console.log(orgProfile)
+    req.body.organizationalId= await organizationalProfile.createOrganizationalProfile(orgProfile) .then((result) => {
+      return result._id;
+  });
+  
     const result = userSchema.validate(req.body);
     if (result.error) {
       console.log(result.error.message);
@@ -43,7 +53,7 @@ exports.Signup = async (req, res) => {
         if(emailToken!==null){
           return res.json({
             error: true,
-            message: "We send a verification code through your Email please check your email",
+            message: "We already send a verification code through your Email please check your email",
           });
         }else{
           User.findOneAndRemove({_id: user._id}, (err) => {
@@ -55,15 +65,12 @@ exports.Signup = async (req, res) => {
           });
         }
       }else{
-        return res.json({
-          error: true,
-          message: "Email is already in use",
-        });
+        console.log("error")
+        res.status(400).send({ message: 'sfdfsdf' });
       }
     }
     const hash = await User.hashPassword(result.value.password);
-    const id = uuid(); //Generate unique id for the user.
-    result.value.userId = id;
+    
     //remove the confirmPassword field from the result as we dont need to save this in the db.
     delete result.value.confirmPassword;
     result.value.password = hash;
@@ -88,20 +95,22 @@ exports.Signup = async (req, res) => {
     
     return res.status(200).json({
       success: true,
-      message: "Registration Success",
+      user:result.value.email,
+      message: "Registration Success We send a verification code through your Email",
+
     });
   } catch (error) {
     return res.status(500).json({
       error: true,
       message: "Cannot Register",
     });
+    
   }
 };
 
 exports.login = async (req, res) => {
   console.log(req.body)
   try {
-
     const { email, password } = req.body;
 
     if (!email) {
@@ -130,7 +139,6 @@ exports.login = async (req, res) => {
           message: "account not found"
         })
       }
-
       //through error if the account is not activated with the code sent by the email
       if (!user.active) {
         res.status(400).json({
@@ -142,14 +150,13 @@ exports.login = async (req, res) => {
       const isValid = await User.comparePasswords(password, user.password);
       if (!isValid) {
         return res.status(400).json({
-          error: true,
+          error: "Incorrect Password",
           message: "Incorrect password"
         })
       }
 
 
       const { error, token } = await generateJwt(user.email, user._id,user.organizationalId);
-      console.log(error)
       if (error) {
         return res.status(500).json({
           error: true,
@@ -162,7 +169,11 @@ exports.login = async (req, res) => {
       //successfully login
       return res.send({
         success: true,
-        message: user.accessToken,
+        token: user.accessToken,
+        user: {
+          id: user.id,
+          email: user.email,
+      },
       })
 
 
@@ -178,6 +189,7 @@ exports.login = async (req, res) => {
 }
 
 exports.activate = async (req, res) => {
+  
   try {
     const { email, code } = req.body;
     if (!email || !code) {
@@ -208,14 +220,11 @@ exports.activate = async (req, res) => {
       user.emailToken = "";
       user.emailTokenExpires = null;
       user.active = true;
-        
+
+      
+      
+    
       await user.save();
-
-      orgProfile={
-        contact_email :user.email,
-      }
-      organizationalProfile.createOrganizationalProfile(orgProfile);
-
       return res.status(200).json({
         success: true,
         message: "account activated",
@@ -275,10 +284,7 @@ exports.forgetPassword = async (req, res) => {
 
     await user.save();
 
-    return res.send({
-      success: true,
-      message: "we send a reset password link through your email pleace check your email",
-    })
+     return [401, { message: 'sfdfsdf' }]
 
   } catch (error) {
     console.error("forgot-password-error", error);
@@ -351,9 +357,38 @@ exports.resetPassword = async (req, res) => {
   }
 }
 
+
+exports.profile = async (req, res) => {
+  try {
+    const decoded = await token.decodeToken(req.headers.authorization);
+    const user = await User.findOne({
+      _id: decoded.id
+    });
+    if (!user) {
+        return [401, { message: 'Invalid authorization token' }]
+    }
+    return res.status(200).json({
+      error: false,
+      user: {
+        id: user.id,
+        email: user.email,
+    },
+    })
+} catch (err) {
+    console.error(err)
+    return [500, { message: 'Internal server error' }]
+}
+
+
+};
+
+
+
 exports.logout = async (req, res) => {
   try {
-    const { id } = req.decoded;
+
+    const decoded = await token.decodeToken(req.headers.authorization);
+    const { id } = decoded.id;
 
     let user = await User.findOne({ userId: id });
 
@@ -361,7 +396,9 @@ exports.logout = async (req, res) => {
 
     await user.save();
 
-    return res.send({ success: true, message: "User Logged out" });
+    return res.send({ success: true,
+      isAuthenticated:false,
+       message: "User Logged out" });
   } catch (error) {
     console.error("user-logout-error", error);
     return res.stat(500).json({

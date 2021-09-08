@@ -20,6 +20,7 @@ var organizationalProfileRouter = require('./inventory/organizational_profile/or
 var purchaseOrderRouter = require('./inventory/purchase_order/purchaseOrder.routes');
 var saleOrderRouter = require('./inventory/sale_order/saleOrder.routes');
 var warehouseRouter = require('./inventory/warehouse/warehouse.routes');
+var reportRouter = require('./inventory/reports/report.routes');
 
 
 
@@ -55,6 +56,7 @@ app.use('/organization', organizationalProfileRouter); //register organizational
 app.use('/purchase-order', purchaseOrderRouter); //register PO routes  
 app.use('/sale-order', saleOrderRouter); //register sale-order routes  
 app.use('/warehouse', warehouseRouter); //register warehouse routes  
+app.use('/reports', reportRouter); //register report routes  
 
 
 server.listen(config.port,()=> {

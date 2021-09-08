@@ -12,7 +12,9 @@ router.post("/insert-customer", [
   // validateToken,
   // privilages.getPrivilages,
   customerController.insert
-]);
+
+])
+
 
 
 
@@ -29,6 +31,7 @@ router.get(('/get-customers'), [
   // privilages.getPrivilages,
   customerController.list
 ]);
+
 
 router.patch(('/patch-customer/:customerId'), [
   cleanBody,
