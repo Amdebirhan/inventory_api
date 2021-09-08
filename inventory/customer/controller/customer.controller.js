@@ -1,7 +1,9 @@
 const customerModel = require("../models/customer.models"); 
+const token= require("../../../authorization/middlewares/decodeToken");
 
-module.exports.insert = (req, res) => {
-    console.log(req.body.data[0].id)
+module.exports.insert = async(req, res) => {
+    const decoded = await token.decodeToken(req.headers.authorization);
+    req.body.data[0].organization_ID=decoded.organizationalId;
     customerModel.createCustomer(req.body.data[0])
         .then((result) => {
             const values = [];
@@ -26,7 +28,8 @@ module.exports.insert = (req, res) => {
     });
  };
 
- module.exports.list = (req, res) => {
+ module.exports.list = async(req, res) => {
+    const decoded = await token.decodeToken(req.headers.authorization);
     let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
     let page = 0;
     if (req.query) {

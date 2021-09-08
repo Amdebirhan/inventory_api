@@ -32,6 +32,7 @@ router.get(('/get-customers'), [
   customerController.list
 ]);
 
+
 router.patch(('/patch-customer/:customerId'), [
   cleanBody,
   // validateToken,

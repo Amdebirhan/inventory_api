@@ -53,9 +53,9 @@ module.exports.patchCustomer = (id, customerData) => {
   }, customerData);
 };
 
-module.exports.list = (perPage, page) => {
+module.exports.list = (perPage, page,organizationId) => {
   return new Promise((resolve, reject) => {
-    customer.find()
+    customer.find({organizational_ID:organizationId})
           .limit(perPage)
           .skip(perPage * page)
           .exec(function (err, users) {

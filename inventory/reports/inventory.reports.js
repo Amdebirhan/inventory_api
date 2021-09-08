@@ -313,97 +313,97 @@ exports.specificItemSale = async (req, res) => {
     ])
 }
 
-//all saleorders within a specific period of time
-exports.saleorders = async (req, res) => {
-    try {
-        let { startDate, endDate } = req.query;
-        const limit = +req.query.limit || 10
-        const page = +req.query.page || 1
-        const search = req.query.search || ''
-        let date = new Date(req.query.date);
-        let status = req.query.status;
-        let customer = req.query.customerId;
-        //1. check that date is not empty
-        if (startDate === '' || endDate === '') {
-            endDate = new Date();
-            startDate = new Date(endDate);
-            endDate.setDate(startDate.getDate() - 30);//myFutureDate is now 8 days in the future
-            // return res.status(400).json({
-            //     status: 'failure',
-            //     message: 'Please ensure you pick two dates'
-            // })
-        }
-        //2. Query database using Mongoose
-        const transactions = saleorderModel.find({
-            createdAt: {
-                $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
-                $lt: new Date(new Date(endDate).setHours(23, 59, 59))
-            }
-        }).sort({ createdAt: 'asc' })
+// //all saleorders within a specific period of time
+// exports.saleorders = async (req, res) => {
+//     try {
+//         let { startDate, endDate } = req.query;
+//         const limit = +req.query.limit || 10
+//         const page = +req.query.page || 1
+//         const search = req.query.search || ''
+//         let date = new Date(req.query.date);
+//         let status = req.query.status;
+//         let customer = req.query.customerId;
+//         //1. check that date is not empty
+//         if (startDate === '' || endDate === '') {
+//             endDate = new Date();
+//             startDate = new Date(endDate);
+//             endDate.setDate(startDate.getDate() - 30);//myFutureDate is now 8 days in the future
+//             // return res.status(400).json({
+//             //     status: 'failure',
+//             //     message: 'Please ensure you pick two dates'
+//             // })
+//         }
+//         //2. Query database using Mongoose
+//         const transactions = saleorderModel.find({
+//             createdAt: {
+//                 $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
+//                 $lt: new Date(new Date(endDate).setHours(23, 59, 59))
+//             }
+//         }).sort({ createdAt: 'asc' })
 
-        if (!transactions) {
-            return res.status(404).json({
-                status: 'failure',
-                message: 'Could not retrieve transactions'
-            })
-        }
-
-
-        res.status(200).json({
-            status: 'success',
-            data: transactions
-        })
-
-    } catch (error) {
-        return res.status(500).json({
-            status: 'failure',
-            error: error.message
-        })
-    }
-}
-
-//all purchase orders within a specific period of time
-exports.purchaseorders = async (req, res) => {
-    try {
-        let { startDate, endDate } = req.query;
-        //1. check that date is not empty
-        if (startDate === '' || endDate === '') {
-            var startDate = new Date();
-            var endDate = new Date(myCurrentDate);
-            endDate.setDate(endDate.getDate() - 30);//myFutureDate is now 8 days in the future
-            // return res.status(400).json({
-            //     status: 'failure',
-            //     message: 'Please ensure you pick two dates'
-            // })
-        }
-        //2. Query database using Mongoose
-        const transactions = purchaseorderModel.find({
-            createdAt: {
-                $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
-                $lt: new Date(new Date(endDate).setHours(23, 59, 59))
-            }
-        }).sort({ createdAt: 'asc' })
-
-        if (!transactions) {
-            return res.status(404).json({
-                status: 'failure',
-                message: 'Could not retrieve transactions'
-            })
-        }
+//         if (!transactions) {
+//             return res.status(404).json({
+//                 status: 'failure',
+//                 message: 'Could not retrieve transactions'
+//             })
+//         }
 
 
-        res.status(200).json({
-            status: 'success',
-            data: transactions
-        })
+//         res.status(200).json({
+//             status: 'success',
+//             data: transactions
+//         })
 
-    } catch (error) {
-        return res.status(500).json({
-            status: 'failure',
-            error: error.message
-        })
-    }
-}
+//     } catch (error) {
+//         return res.status(500).json({
+//             status: 'failure',
+//             error: error.message
+//         })
+//     }
+// }
+
+// //all purchase orders within a specific period of time
+// exports.purchaseorders = async (req, res) => {
+//     try {
+//         let { startDate, endDate } = req.query;
+//         //1. check that date is not empty
+//         if (startDate === '' || endDate === '') {
+//             var startDate = new Date();
+//             var endDate = new Date(myCurrentDate);
+//             endDate.setDate(endDate.getDate() - 30);//myFutureDate is now 8 days in the future
+//             // return res.status(400).json({
+//             //     status: 'failure',
+//             //     message: 'Please ensure you pick two dates'
+//             // })
+//         }
+//         //2. Query database using Mongoose
+//         const transactions = purchaseorderModel.find({
+//             createdAt: {
+//                 $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
+//                 $lt: new Date(new Date(endDate).setHours(23, 59, 59))
+//             }
+//         }).sort({ createdAt: 'asc' })
+
+//         if (!transactions) {
+//             return res.status(404).json({
+//                 status: 'failure',
+//                 message: 'Could not retrieve transactions'
+//             })
+//         }
+
+
+//         res.status(200).json({
+//             status: 'success',
+//             data: transactions
+//         })
+
+//     } catch (error) {
+//         return res.status(500).json({
+//             status: 'failure',
+//             error: error.message
+//         })
+//     }
+// }
 
 
 
@@ -470,47 +470,47 @@ exports.specificItemPurchase = async (req, res) => {
     ])
 }
 
-exports.purchaseorders = async (req, res) => {
-    try {
-        let { startDate, endDate } = req.query;
-        //1. check that date is not empty
-        if (startDate === '' || endDate === '') {
-            var startDate = new Date();
-            var endDate = new Date(myCurrentDate);
-            endDate.setDate(endDate.getDate() - 30);//myFutureDate is now 8 days in the future
-            // return res.status(400).json({
-            //     status: 'failure',
-            //     message: 'Please ensure you pick two dates'
-            // })
-        }
-        //2. Query database using Mongoose
-        const transactions = purchaseorderModel.find({
-            createdAt: {
-                $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
-                $lt: new Date(new Date(endDate).setHours(23, 59, 59))
-            }
-        }).sort({ createdAt: 'asc' })
+// exports.purchaseorders = async (req, res) => {
+//     try {
+//         let { startDate, endDate } = req.query;
+//         //1. check that date is not empty
+//         if (startDate === '' || endDate === '') {
+//             var startDate = new Date();
+//             var endDate = new Date(myCurrentDate);
+//             endDate.setDate(endDate.getDate() - 30);//myFutureDate is now 8 days in the future
+//             // return res.status(400).json({
+//             //     status: 'failure',
+//             //     message: 'Please ensure you pick two dates'
+//             // })
+//         }
+//         //2. Query database using Mongoose
+//         const transactions = purchaseorderModel.find({
+//             createdAt: {
+//                 $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
+//                 $lt: new Date(new Date(endDate).setHours(23, 59, 59))
+//             }
+//         }).sort({ createdAt: 'asc' })
 
-        if (!transactions) {
-            return res.status(404).json({
-                status: 'failure',
-                message: 'Could not retrieve transactions'
-            })
-        }
+//         if (!transactions) {
+//             return res.status(404).json({
+//                 status: 'failure',
+//                 message: 'Could not retrieve transactions'
+//             })
+//         }
 
 
-        res.status(200).json({
-            status: 'success',
-            data: transactions
-        })
+//         res.status(200).json({
+//             status: 'success',
+//             data: transactions
+//         })
 
-    } catch (error) {
-        return res.status(500).json({
-            status: 'failure',
-            error: error.message
-        })
-    }
-}
+//     } catch (error) {
+//         return res.status(500).json({
+//             status: 'failure',
+//             error: error.message
+//         })
+//     }
+// }
 
 
 

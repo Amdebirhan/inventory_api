@@ -60,9 +60,6 @@ module.exports.findById=(saleorderId)=>{
 });
 }
 
-
-
-
 module.exports.createSaleorder = (SOData) => {
   const Saleorder = new Purchaseorder(SOData);
   return Saleorder.save();
