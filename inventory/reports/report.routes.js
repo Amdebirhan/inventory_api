@@ -1,5 +1,5 @@
 const cleanBody = require("../common/middlewares/cleanbody");
-const POController = require("./controller/purchaseOrder.controller");
+const POController = require("../purchase_order/controller/purchaseOrder.controller");
 const { validateToken } = require("../../authorization/middlewares/validateToken");
 const privilages = require("../../authorization/middlewares/verifyPrivilageRoutesAndRequests");
 const express = require('express');
