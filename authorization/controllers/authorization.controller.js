@@ -361,6 +361,7 @@ exports.resetPassword = async (req, res) => {
 exports.profile = async (req, res) => {
   try {
     const decoded = await token.decodeToken(req.headers.authorization);
+    console.log(decoded)
     const user = await User.findOne({
       _id: decoded.id
     });
@@ -388,9 +389,9 @@ exports.logout = async (req, res) => {
   try {
 
     const decoded = await token.decodeToken(req.headers.authorization);
-    const { id } = decoded.id;
+    const {id} = decoded.id;
 
-    let user = await User.findOne({ userId: id });
+    let user = await User.findOne({ _id: id });
 
     user.accessToken = "";
 
