@@ -1,11 +1,11 @@
-const saleorderModel = require('models/saleOrder.models');
+const saleorderModel = require('../sale_order/models/saleOrder.models');
 const purchaseorderModel = require('../purchase_order/models/purchaseOrder.models');
 const invoiceModel = require('../invoice/models/invoice.models');
 const  billModel= require('../bill/models/bill.models');
 const User = require('../users/models/users.model');
 const itemModel = require('../item/models/item.models');
 const sendEmail = require("../helpers/mailler");
-billModel
+
 
 //quantity on hand//
 //quantity to be recived//
