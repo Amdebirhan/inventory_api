@@ -1,64 +1,81 @@
 const cleanBody = require("../common/middlewares/cleanbody");
-const reportController = require("./inventory.reports");
+const inventoryReport = require("../reports/inventory.reports");
 const { validateToken } = require("../../authorization/middlewares/validateToken");
 const privilages = require("../../authorization/middlewares/verifyPrivilageRoutesAndRequests");
 const express = require('express');
 router = express.Router();
 
-router.get(('/quantity-on-hand'), [
+router.get('/quantity-on-hand',function(req, res){
+    [
         cleanBody,
         // validateToken,
         // privilages.getPrivilages,
-        reportController.quantityOnHand
-    ]);
+        inventoryReport.insertPO
+    ]
+}
+ );
 
-router.get(('/quantity-to-recive'), [
-    cleanBody,
-    // validateToken,
-    // privilages.getPrivilages,
-    reportController.quantityToRecive
-]);
+router.get('/quantity-to-recive',function(req, res){
+    [
+        cleanBody,
+        // validateToken,
+        // privilages.getPrivilages,
+        inventoryReport.quantityToRecive
+    ]
+} );
 
-router.get(('/saleorders'), [
-    cleanBody,
-    // validateToken,
-    // privilages.getPrivilages,
-    reportController.saleorders
-]);
-router.get(('/invoices'), [
-    cleanBody,
-    // validateToken,
-    // privilages.getPrivilages,
-    reportController.invoices
-]);
+router.get('/saleorders', function(req, res){
+    [
+        cleanBody,
+        // validateToken,
+        // privilages.getPrivilages,
+        inventoryReport.saleorders
+    ]
+});
+router.get('/invoices', function(req, res){
+    [
+        cleanBody,
+        // validateToken,
+        // privilages.getPrivilages,
+        inventoryReport.invoices
+    ]
+});
 
-router.get(('/purchaseorders'),
-    cleanBody,
-    // validateToken,
-    // privilages.getPrivilages,
-    reportController.purchaseorders,
-);
+router.get('/purchaseorders', function(req, res){
+    [
+        cleanBody,
+        // validateToken,
+        // privilages.getPrivilages,
+        inventoryReport.purchaseorders,
+    ]
+});
 
-router.get(('/bills'), [
-    cleanBody,
-    // validateToken,
-    // privilages.getPrivilages,
-    reportController.bills
-]);
+router.get('/bills', function(req, res){
+    [
+        cleanBody,
+        // validateToken,
+        // privilages.getPrivilages,
+        inventoryReport.bills
+    ]
+});
 
-router.get(('/specific-item-sale'), [
-    cleanBody,
-    // validateToken,
-    // privilages.getPrivilages,
-    reportController.specificItemSale
-]);
+router.get('/specific-item-sale',  function(req, res){
+    [
+        cleanBody,
+        // validateToken,
+        // privilages.getPrivilages,
+        inventoryReport.specificItemSale
+    ]
+});
 
-router.get(('/specific-item-purchase'), [
-    cleanBody,
-    // validateToken,
-    // privilages.getPrivilages,
-    reportController.specificItemPurchase
-]);
+router.get('/specific-item-purchase', function(req, res){
+    [
+        cleanBody,
+        // validateToken,
+        // privilages.getPrivilages,
+        inventoryReport.specificItemPurchase
+    ]
+} );
 
 module.exports = router;
 

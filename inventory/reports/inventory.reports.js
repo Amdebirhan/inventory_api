@@ -5,7 +5,7 @@ const  billModel= require('../bill/models/bill.models');
 const User = require('../users/models/users.model');
 const itemModel = require('../item/models/item.models');
 const sendEmail = require("../helpers/mailler");
-billModel
+
 
 //quantity on hand//
 //quantity to be recived//
