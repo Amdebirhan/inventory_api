@@ -7,14 +7,14 @@ router = express.Router();
 
 //list all invoices
 
-router.get('/', function(req, res) {
+router.get('/insert-bill', function(req, res) {
   billController.list
 });
 
 
 //get a single invoice
 
-router.get('/:id', function(req, res) {
+router.get('/get-single-bill/:id', function(req, res) {
   billController.singleBill
 });
 

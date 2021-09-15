@@ -1,7 +1,8 @@
 const supplierModel = require("../models/supplier.models"); 
 
 module.exports.insert = (req, res) => {
-    supplierModel.createSupplier(req.body)
+    console.log(req.body.data[0])
+    supplierModel.createSupplier(req.body.data[0])
         .then((result) => {
             const values = [];
             values.push(result);
@@ -11,13 +12,17 @@ module.exports.insert = (req, res) => {
 
 
 module.exports.getById = (req, res) => {
+    console.log('lkjk')
     supplierModel.findById(req.params.supplierId).then((result) => {
-        res.status(200).send(result);
+        const values = [];
+        values.push(result);
+        res.status(201).send({values});
     });
  };
 
  exports.patchById = (req, res) => {
-    supplierModel.patchCustomer(req.params.supplierId, req.body).then((result) => {
+     console.log(req.body.data)
+    supplierModel.patchCustomer(req.params.supplierId, req.body.data).then((result) => {
         const values = [];
         values.push(result);
         res.status(201).send({values});

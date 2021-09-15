@@ -1,4 +1,4 @@
-const saleorderModel = require('models/saleOrder.models');
+const saleorderModel = require('../sale_order/models/saleOrder.models');
 const purchaseorderModel = require('../purchase_order/models/purchaseOrder.models');
 const invoiceModel = require('../invoice/models/invoice.models');
 const  billModel= require('../bill/models/bill.models');

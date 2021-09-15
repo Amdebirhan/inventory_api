@@ -7,13 +7,13 @@ const cleanBody = require("../common/middlewares/cleanbody");
 
 //list all invoices
 
-router.get('/', function(req, res) {
+router.get('/insert-invoice', function(req, res) {
   InvoiceController.list
 });
 
 //get a single invoice
 
-router.get('/:id', function(req, res) {
+router.get('get-single-invoice/:id', function(req, res) {
   InvoiceController.singleInvoice
 });
 

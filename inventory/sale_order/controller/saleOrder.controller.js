@@ -7,6 +7,7 @@ const sendEmail = require("../../helpers/mailler");
 const validateSchema = require('../middlewares/saleOrder.middleware');
 
 exports.insertSO = async (req, res) => {
+    console.log(req.body.data)
     try {
         //grab every item id and decrease there quantity from the db then create SO
         result = validateSchema.datavalidation(req.body);

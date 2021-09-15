@@ -14,7 +14,7 @@ router.post("/insert-warehouse", [
   warehouseController.insert
 ]);
 
-router.get('/get-warehouse/:warehouseId',
+router.get('/get-single-warehouse/:warehouseId',
   [
    cleanBody,
     // validateToken,

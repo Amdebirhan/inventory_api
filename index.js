@@ -9,7 +9,6 @@ const authRouter = require('./authorization/routes.config');
 const userRouter = require('./inventory/users/routes.config');
 const roleRouter = require('./inventory/privilages/Role/routes.config');
 const resourceRouter = require('./inventory/privilages/Resource/routes.config');
-const rightRouter = require('./inventory/privilages/Resource/routes.config');
 var invoicesRouter = require('./inventory/invoice/invoice.routes');
 var branchRouter = require('./inventory/branch/branch.routes');
 var billRouter = require('./inventory/bill/bill.routes');

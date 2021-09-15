@@ -11,11 +11,10 @@ const warehouseSchema = new Schema({
     warehouse_name: { type: String },
     active: { type: Boolean, default: true },
     email: { type: String, unique: true },
-    phone_no: { type: String, unique: true },
+    mobile_phone_no: { type: String, unique: true },
     country: { type: String },
     state: { type: String },
     city: { type: String },
-    street: { type: String }
 },
 
     {

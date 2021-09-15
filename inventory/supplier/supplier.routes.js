@@ -22,7 +22,7 @@ router.get(('/get-supplier/:supplierId'),
     supplierController.getById
   ])
 
-router.get(('/get-supplier'), [
+router.get(('/get-suppliers'), [
   cleanBody,
   // validateToken,
   // privilages.getPrivilages,

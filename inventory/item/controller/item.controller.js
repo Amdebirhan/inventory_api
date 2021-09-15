@@ -2,23 +2,32 @@ const invoiceModel = require('../../invoice/models/invoice.models');
 const User = require('../../users/models/users.model');
 const itemModel = require('../models/item.models');
 const historyModel = require('../models/itemHistory.models');
+const token = require("../../../authorization/middlewares/decodeToken");
 
-exports.insert = (req, res) => {
-console.log(req.body)
-    itemModel.createItem(req.body)
+exports.insert =async(req, res) => {
+console.log(req.body.data[0])
+
+const decoded = await token.decodeToken(req.headers.authorization);
+req.body.data[0].organizationalId=decoded.organizationalId;
+var id;
+    itemModel.createItem(req.body.data[0])
         .then((result) => {
-            id: result._id;
+            id= result._id;
+            const values = [];
+            values.push(result);
+            res.status(201).send({values});
         });
-
         const history = {
-            organizationalId: req.decoded.organizationalId,
+            organizationalId:decoded.organizationalId,
             item_ID:id,
                 changes: [{
                     quantity:req.body.quantity
             }]
         }
         historyModel.createHistory(history).then((result) => {
-            return res.status(201).send({});
+              const values = [];
+            values.push(result);
+            res.status(201).send({values});
         });
 };
 
@@ -31,8 +40,11 @@ exports.getById = (req, res) => {
 };
 
 exports.patchById = (req, res) => {
-    itemModel.patchUser(req.params.itemId, req.body).then((result) => {
-        res.status(204).send({});
+    console.log(req.body)
+    itemModel.patchUser(req.params.itemId, req.body.data).then((result) => {
+        const values = [];
+        values.push(result);
+        res.status(201).send({values});
     });
 };
 

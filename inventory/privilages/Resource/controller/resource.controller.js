@@ -1,10 +1,12 @@
 const resourceModel= require('../model/resource.model');
-const defaultroutes= require('../../helper/registerdUrls');
+const defaultPrivilages= require('../../helper/privilageRoutes');
 const { v4: uuid } = require("uuid");
   const Joi = require("joi");
           
 exports.insert =async (req, res) => {
+  console.log(req.body)
      try{
+      req.body.url=defaultPrivilages.salesPersonUrls;
       console.log(req.body);
     var resourceSchema = await resourceModel.findOne({
         roleId:req.body.roleId
@@ -46,8 +48,10 @@ exports.insert =async (req, res) => {
   }
   resourceModel.list(limit, page)
       .then((result) => {
-        delete result.__v;
-          res.status(200).send(result);
+        const values = [];
+        values.push(result);
+        res.status(201).send(values);
+        console.log(values)
       })
  };
 

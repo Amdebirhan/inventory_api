@@ -5,23 +5,23 @@ const express = require('express');
 router = express.Router();
 
 
-router.post('/', [
+router.post('/insert-role', [
     cleanBody,
     rolesController.insert
 ]);
-router.get('/', [
+router.get('/list-role', [
     cleanBody,
     rolesController.list
 ]);
-router.get('/:userId', [
+router.get('get-role/:userId', [
     cleanBody,
     rolesController.getById
 ]);
-router.patch('/:userId', [
+router.patch('update-role/:userId', [
     cleanBody,
     rolesController.patchById
 ]);
-router.delete('/:userId', [
+router.delete('delete-role/:userId', [
     cleanBody,
     rolesController.removeById
 ]);

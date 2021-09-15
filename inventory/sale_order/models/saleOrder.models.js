@@ -65,13 +65,13 @@ module.exports.createSaleorder = (SOData) => {
   return Saleorder.save();
 };
 
-exports.patchSO = (id, SOData) => {
+module.exports.patchSO = (id, SOData) => {
   return Saleorder.findOneAndUpdate({
       _id: id
   }, SOData);
 };
 
-exports.list = (perPage, page) => {
+module.exports.list = (perPage, page) => {
   return new Promise((resolve, reject) => {
     Saleorder.find()
           .limit(perPage)
@@ -86,7 +86,7 @@ exports.list = (perPage, page) => {
   });
 };
 
-exports.removeById = (SOId) => {
+module.exports.removeById = (SOId) => {
   return new Promise((resolve, reject) => {
     Saleorder.deleteMany({_id: SOId}, (err) => {
           if (err) {

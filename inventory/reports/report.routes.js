@@ -1,5 +1,5 @@
 const cleanBody = require("../common/middlewares/cleanbody");
-const POController = require("./controller/purchaseOrder.controller");
+const reportController = require("./inventory.reports");
 const { validateToken } = require("../../authorization/middlewares/validateToken");
 const privilages = require("../../authorization/middlewares/verifyPrivilageRoutesAndRequests");
 const express = require('express');
@@ -9,55 +9,55 @@ router.get(('/quantity-on-hand'), [
         cleanBody,
         // validateToken,
         // privilages.getPrivilages,
-        POController.insertPO
+        reportController.quantityOnHand
     ]);
 
 router.get(('/quantity-to-recive'), [
     cleanBody,
     // validateToken,
     // privilages.getPrivilages,
-    POController.getById
+    reportController.quantityToRecive
 ]);
 
 router.get(('/saleorders'), [
     cleanBody,
     // validateToken,
     // privilages.getPrivilages,
-    POController.list
+    reportController.saleorders
 ]);
 router.get(('/invoices'), [
     cleanBody,
     // validateToken,
     // privilages.getPrivilages,
-    POController.convertPOToBill
+    reportController.invoices
 ]);
 
 router.get(('/purchaseorders'),
     cleanBody,
     // validateToken,
     // privilages.getPrivilages,
-    POController.updatePO,
+    reportController.purchaseorders,
 );
 
 router.get(('/bills'), [
     cleanBody,
     // validateToken,
     // privilages.getPrivilages,
-    POController.removeById
+    reportController.bills
 ]);
 
 router.get(('/specific-item-sale'), [
     cleanBody,
     // validateToken,
     // privilages.getPrivilages,
-    POController.removeById
+    reportController.specificItemSale
 ]);
 
 router.get(('/specific-item-purchase'), [
     cleanBody,
     // validateToken,
     // privilages.getPrivilages,
-    POController.removeById
+    reportController.specificItemPurchase
 ]);
 
 module.exports = router;

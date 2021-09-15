@@ -4,12 +4,12 @@ const cleanBody = require ("../../common/middlewares/cleanbody");
 const express = require('express');
 router = express.Router();
 
-router.post('/', [
+router.post('/insert-resource', [
     cleanBody,
     resourcesController.insert
 ]);
 
-router.get('/', [
+router.get('/list-resource', [
     cleanBody,
     resourcesController.list
 ]);
