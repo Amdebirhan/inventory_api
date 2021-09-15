@@ -33,7 +33,7 @@ async function decodeToken(authorization) {
         message: `Authentication error`,
       };
     }
-    return res.status(403).json(result);
+    //return res.status(403).json(result);
   }
 }
 

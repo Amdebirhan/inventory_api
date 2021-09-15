@@ -43,7 +43,9 @@ module.exports.insert = async(req, res) => {
     })
  };
 
+
  module.exports.removeById = (req, res) => {
+     
     customerModel.removeById(req.params.customerId)
         .then((result)=>{
             res.status(204).send({});
