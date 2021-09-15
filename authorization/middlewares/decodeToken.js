@@ -8,10 +8,7 @@ async function decodeToken(authorization) {
   let result;
   
   if (!authorizationHeader)
-    return res.status(401).json({
-      error: true,
-      message: "Access token is missing",
-    });
+    return ("Access token is missing");
 
   const token = authorizationHeader.split(" ")[1]; // Bearer <token>
   const options = {

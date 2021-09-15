@@ -10,7 +10,7 @@ exports.insertSO = async (req, res) => {
     console.log(req.body.data)
     try {
         //grab every item id and decrease there quantity from the db then create SO
-        result = validateSchema.datavalidation(req.body);
+        //result = validateSchema.datavalidation(req.body);
 
         for (let i = 0; i < result.value.itemId.length; i++) {
             const item = itemModel.findOne({ _id: itemId });

@@ -19,7 +19,8 @@ const sendEmail = require("../helpers/mailler");
 //sale order summary
 
 
-exports.quantityOnHand = async (req, res) => {
+module.exports.quantityOnHand = async ( res) => {
+    conosele.log('fddfs')
     try {
         //count noumber of items in the organization
         organizationId = body.decoded.organizationId;
@@ -46,11 +47,11 @@ exports.quantityOnHand = async (req, res) => {
     }
 }
 
-exports.quantityToRecive = async (req, res) => {
+module.exports.quantityToRecive = async (req, res) => {
 }
 
 //all sale orders sale orders by status , sale orders by customers and sale order by date
-exports.saleorders = async function (req, res) {
+module.exports.saleorders = async function (req, res) {
     let aggregate_options = [];
 
     let { startDate, endDate } = req.query;
@@ -101,7 +102,7 @@ exports.saleorders = async function (req, res) {
     return res.status(200).json(result);
 };
 //all invoice orders invoice by status , invoice by customers and sale order by date
-exports.invoices = async function (req, res) {
+module.exports.invoices = async function (req, res) {
     let aggregate_options = [];
 
     let { startDate, endDate } = req.query;
@@ -152,7 +153,7 @@ exports.invoices = async function (req, res) {
     return res.status(200).json(result);
 };
 //all purchase orders sale orders by status , sale orders by customers and sale order by date
-exports.purchaseorders = async function (req, res) {
+module.exports.purchaseorders = async function (req, res) {
     let aggregate_options = [];
 
     let { startDate, endDate } = req.query;
@@ -203,7 +204,7 @@ exports.purchaseorders = async function (req, res) {
     return res.status(200).json(result);
 };
 //all bill orders sale orders by status , sale orders by customers and sale order by date
-exports.bills = async function (req, res) {
+module.exports.bills = async function (req, res) {
     let aggregate_options = [];
 
     let { startDate, endDate } = req.query;
@@ -255,7 +256,7 @@ exports.bills = async function (req, res) {
 };
 
 //specific item sale within a given period of time
-exports.specificItemSale = async (req, res) => {
+module.exports.specificItemSale = async (req, res) => {
     let { startDate, endDate } = req.query;
     //1. check that date is not empty
     if (startDate === '' || endDate === '') {
@@ -408,7 +409,7 @@ exports.specificItemSale = async (req, res) => {
 
 
 //specific item purchase within a given period of time
-exports.specificItemPurchase = async (req, res) => {
+module.exports.specificItemPurchase = async (req, res) => {
 
     organizationalId = req.decoded.organizationId;
 

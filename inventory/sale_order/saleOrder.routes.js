@@ -5,14 +5,14 @@ const privilages = require("../../authorization/middlewares/verifyPrivilageRoute
 const express = require('express');
 router = express.Router();
 
-router.route('/insert-SO').post(function (req, res) {
+router.post(('/insert-SO'),
     [
         cleanBody,
         // validateToken,
         // privilages.getPrivilages,
         SOController.insertSO
     ]
-})
+)
 
 router.get(('/get-SO/:POId'), [
     cleanBody,
