@@ -56,6 +56,10 @@ exports.insertSO = async (req, res) => {
         const newSO = new saleorderModel(result);
         await newSO.save();
 
+        const values = [];
+                values.push(result);
+                return res.status(201).send({values});
+                
         return res.status(200).json({
             success: true,
             message: "purchaseorder saved Success",
