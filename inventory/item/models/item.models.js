@@ -41,6 +41,7 @@ module.exports.createItem = (itemData) => {
 };
 
 module.exports.patchUser = (id, itemData) => {
+  console.log(itemData)
   return Item.findOneAndUpdate({
       _id: id
   }, itemData);

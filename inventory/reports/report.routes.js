@@ -5,30 +5,32 @@ const privilages = require("../../authorization/middlewares/verifyPrivilageRoute
 const express = require('express');
 router = express.Router();
 
+router.get('/quantity-on-hand',
+    [
+        cleanBody,
+        // validateToken,
+        // privilages.getPrivilages,
+        inventoryReport.quantityOnHand
+    ]
+ );
 
- router.get(('/quantity-on-hand'), [
-    cleanBody,
-    // validateToken,
-    // privilages.getPrivilages,
-    inventoryReport.insertPO
-]);
-router.get('/quantity-to-recive',function(req, res){
+router.get(('/quantity-to-recive'),
     [
         cleanBody,
         // validateToken,
         // privilages.getPrivilages,
         inventoryReport.quantityToRecive
     ]
-} );
+);
 
-router.get('/saleorders', function(req, res){
+router.get(('/saleorders'),
     [
         cleanBody,
         // validateToken,
         // privilages.getPrivilages,
         inventoryReport.saleorders
     ]
-});
+);
 router.get('/invoices', function(req, res){
     [
         cleanBody,

@@ -5,6 +5,7 @@ const  billModel= require('../bill/models/bill.models');
 const User = require('../users/models/users.model');
 const itemModel = require('../item/models/item.models');
 const sendEmail = require("../helpers/mailler");
+const token = require("../../authorization/middlewares/decodeToken");
 
 
 //quantity on hand//
@@ -19,24 +20,30 @@ const sendEmail = require("../helpers/mailler");
 //sale order summary
 
 
-module.exports.quantityOnHand = async ( res) => {
-    conosele.log('fddfs')
+module.exports.quantityOnHand = async (req,res) => {
     try {
         //count noumber of items in the organization
-        organizationId = body.decoded.organizationId;
+    const decoded = await token.decodeToken(req.headers.authorization);
+        organizationId = decoded.organizationId;
         itemModel.find({ organization_ID: organizationId }, 'quantity', function (error, data) {
             if (error) {
+                console.log(res)
                 return res.status(500).send({
+                    
                     msg: 'Error while finding records',
                     data: []
                 })
             } else {
+                var quantityOnHand=0;
                 for (var i = 0; i < data.length; i++) {
                     quantityOnHand += data.quantity;
                 }
-                return res.status(200).send({
-                    data: quantityOnHand,
-                })
+
+                const values = [];
+                values.push(quantityOnHand);
+                return res.status(201).send({values});
+
+               
             }
         })
     } catch (error) {
@@ -48,12 +55,46 @@ module.exports.quantityOnHand = async ( res) => {
 }
 
 module.exports.quantityToRecive = async (req, res) => {
+    try {
+        //count noumber of items in the organization
+    const decoded = await token.decodeToken(req.headers.authorization);
+        organizationId = decoded.organizationId;
+        console.log(decoded)
+        itemModel.find({ organization_ID: organizationId }, 'quantity', function (error, data) {
+            if (error) {
+                console.log(res)
+                return res.status(500).send({
+                    
+                    msg: 'Error while finding records',
+                    data: []
+                })
+            } else {
+                var quantityOnHand=0;
+                for (var i = 0; i < data.length; i++) {
+                    quantityOnHand += data.quantity;
+                }
+
+                const values = [];
+                values.push(quantityOnHand);
+                console.log(values)
+                return res.status(201).send({values});
+
+               
+            }
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error: true,
+            message: "Error while finding records. Please try again later.",
+        });
+    }
 }
 
 //all sale orders sale orders by status , sale orders by customers and sale order by date
 module.exports.saleorders = async function (req, res) {
+    const decoded = await token.decodeToken(req.headers.authorization);
+        
     let aggregate_options = [];
-
     let { startDate, endDate } = req.query;
         const limit = +req.query.limit || 10
         const page = +req.query.page || 1
@@ -61,7 +102,7 @@ module.exports.saleorders = async function (req, res) {
        //const search = req.query.search || ''
     //FILTERING
     let match = {
-        organizationalId:req.decoded.organizationId,
+        organizationalId:decoded.organizationId,
     };
 
     //filter by date
@@ -99,7 +140,9 @@ module.exports.saleorders = async function (req, res) {
 
     // Set up the aggregation
     const result =await saleorderModel.aggregate(aggregate_options);
-    return res.status(200).json(result);
+    const values = [];
+    values.push(result);
+    return res.status(201).send({values});
 };
 //all invoice orders invoice by status , invoice by customers and sale order by date
 module.exports.invoices = async function (req, res) {

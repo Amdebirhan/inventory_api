@@ -398,7 +398,7 @@ exports.logout = async (req, res) => {
     });
   } catch (error) {
     console.error("user-logout-error", error);
-    return res.stat(500).json({
+    return res.status(500).json({
       error: true,
       message: error.message,
     });

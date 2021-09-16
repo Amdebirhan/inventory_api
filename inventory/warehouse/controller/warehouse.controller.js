@@ -5,9 +5,12 @@ const itemModel = require("../../item/models/item.models");
 
 
 module.exports.insert = (req, res) => {
-    warehouseModel.createWarehouse(req.body)
+    console.log(req.body)
+    warehouseModel.createWarehouse(req.body.data[0])
         .then((result) => {
-            res.status(201).send({id: result._id});
+            const values = [];
+            values.push(result);
+            res.status(201).send({values});
         });
  };
 
@@ -19,8 +22,10 @@ module.exports.getById = (req, res) => {
  };
 
 module.exports.patchById = (req, res) => {
-    warehouseModel.patchUser(req.params.warehouseId, req.body).then((result) => {
-            res.status(204).send({});
+    warehouseModel.patchUser(req.params.warehouseId, req.body.data).then((result) => {
+        const values = [];
+        values.push(result);
+        res.status(201).send({values});
     });
  };
 

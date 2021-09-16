@@ -5,27 +5,36 @@ const itemModel = require('../../item/models/item.models');
 const historyModel = require('../../item/models/itemHistory.models');
 const sendEmail = require("../../helpers/mailler");
 const validateSchema = require('../middlewares/saleOrder.middleware');
+const token = require("../../../authorization/middlewares/decodeToken");
 
 exports.insertSO = async (req, res) => {
-    console.log(req.body.data)
     try {
         //grab every item id and decrease there quantity from the db then create SO
-        //result = validateSchema.datavalidation(req.body);
+        const decoded = await token.decodeToken(req.headers.authorization);
+        
+    //console.log(req.body.data)
+        result =req.body.data;
+        for (let i = 0; i < result.items.length; i++) {
+            //console.log(result.items[i]._id)
+            var item =await itemModel.findById(result.items[i]._id);
+            itemQuantity = item.quantity - result.items[i].quantity;
+            //console.log(itemQuantity)
+            // const history = {
+            //     organization_ID: decoded.organizationalId,
+            //     item_ID:result.items[i]._id,
+            //     changes: [{
+            //             quantity:result.items[i].quantity
+            //     }]
+            // }
 
-        for (let i = 0; i < result.value.itemId.length; i++) {
-            const item = itemModel.findOne({ _id: itemId });
-            itemQuantity = item.quantity - result.value.itemId[i].quantity;
-            const history = {
-                organization_ID: req.decoded.organizationalId,
-                item_ID:itemId,
-                    changes: [{
-                        quantity:itemQuantity
-                }]
-            }
+        
 
-            historyModel.createHistory(history)
+           //historyModel.createHistory(history)
+           var data={
+            quantity:itemQuantity
+           };
+           var newitem =  itemModel.patchUser(result.items[i]._id, data);
 
-            itemModel.updateMany({ "_id": result.value.itemId[i].id }, { "$set": { "quantity": itemQuantity } }, callback);
         }
 
         
@@ -33,7 +42,8 @@ exports.insertSO = async (req, res) => {
 
         
         //check for notification to do that we need to check every thing 
-        userId = req.decoded.id;
+        userId = decoded.id;
+        console.log(userId)
         const user = await User.findById(userId);
 
         if (!user) {
@@ -43,7 +53,7 @@ exports.insertSO = async (req, res) => {
             })
         }
 
-        const newSO = new saleorderModel(result.value);
+        const newSO = new saleorderModel(result);
         await newSO.save();
 
         return res.status(200).json({
@@ -91,7 +101,9 @@ exports.list = (req, res) => {
         }
     }
     saleorderModel.list(limit, page).then((result) => {
-        res.status(200).send(result);
+        const values = [];
+                values.push(result);
+                return res.status(201).send({values});
     })
 };
 
